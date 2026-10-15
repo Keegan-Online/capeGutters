@@ -6,6 +6,8 @@ import { EnquiryProvider } from "@/components/enquiry/enquiry-context";
 import { EnquiryForm } from "@/components/enquiry/enquiry-form";
 import { Arrow, Logo } from "@/components/icons";
 import { FaqAccordion, ServiceList } from "@/components/sections-client";
+import { SiteFooter, Steps } from "@/components/home-page";
+import { SiteHeader } from "@/components/site-header";
 import { AreaActionSpecimen, QuoteSpecimen } from "./specimens";
 import "./style-guide.css";
 
@@ -44,6 +46,11 @@ function Theme({ variant }: { variant: Variant }) {
             Open page <Arrow className="btn__arrow" />
           </Link>
         </header>
+
+        <section className="sg-block sg-flush">
+          <h3 className="sg-label">Header with version switch (try the links and, below 1360px, the Menu)</h3>
+          <SiteHeader variant={variant} />
+        </section>
 
         <section className="sg-block">
           <h3 className="sg-label">Colour</h3>
@@ -86,6 +93,11 @@ function Theme({ variant }: { variant: Variant }) {
           </div>
         </section>
 
+        <section className="sg-block sg-steps">
+          <h3 className="sg-label">Assessment steps</h3>
+          <Steps steps={c.assessment.steps} />
+        </section>
+
         {variant === "one" && (
           <section className="sg-block">
             <h3 className="sg-label">FAQ row</h3>
@@ -96,12 +108,17 @@ function Theme({ variant }: { variant: Variant }) {
         )}
 
         <section className="sg-block">
-          <h3 className="sg-label">Enquiry form (try submitting it empty)</h3>
+          <h3 className="sg-label">Enquiry form: chips, errors and the DEMO result (submit it empty, then filled)</h3>
           <div className="quote sg-flat sg-quote">
             <div className="quote__form">
               <EnquiryForm variant={variant} deliveryConfigured={Boolean(process.env.ENQUIRY_WEBHOOK_URL)} />
             </div>
           </div>
+        </section>
+
+        <section className="sg-block sg-flush">
+          <h3 className="sg-label">Footer</h3>
+          <SiteFooter variant={variant} />
         </section>
 
         <section className="sg-block sg-map">

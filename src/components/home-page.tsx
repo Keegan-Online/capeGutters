@@ -8,6 +8,57 @@ import { FaqAccordion, ServiceList } from "./sections-client";
 import { Lines } from "./lines";
 import { SiteHeader } from "./site-header";
 
+export function Steps({ steps }: { steps: { title: string; text?: string }[] }) {
+  return (
+    <ol className="steps">
+      {steps.map((s, i) => (
+        <li key={s.title} className="step">
+          <div className="step__body">
+            <p className="step__title">
+              <Lines text={s.title} />
+            </p>
+            {s.text && (
+              <p className="step__text">
+                <Lines text={s.text} />
+              </p>
+            )}
+          </div>
+          {i < steps.length - 1 && <Arrow className="step__arrow" />}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+export function SiteFooter({ variant }: { variant: Variant }) {
+  return (
+    <footer className="site-footer">
+      {variant === "two" && (
+        <div className="site-footer__rule" aria-hidden="true">
+          <svg viewBox="0 0 132 17" preserveAspectRatio="none" className="site-footer__roof">
+            <path d="M0 16 L48 1 L86.5 16 H132" />
+          </svg>
+        </div>
+      )}
+      <div className="site-footer__inner">
+        <a href="#top" className="site-footer__brand" aria-label="Cape Gutters, back to top">
+          <Logo />
+        </a>
+        <nav aria-label="Footer">
+          <ul className="site-footer__nav">
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <a href={n.href}>{n.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <p className="site-footer__note">{COPY[variant].footerNote}</p>
+      </div>
+    </footer>
+  );
+}
+
 /** Splits a closing full stop off so the second page can colour it. */
 function Stop({ text }: { text: string }) {
   if (!text.endsWith(".")) return <>{text}</>;
@@ -37,7 +88,7 @@ export function HomePage({ variant }: { variant: Variant }) {
           <section className="hero" aria-labelledby="hero-title">
             <div className="hero__media">
               <Image
-                src={one ? "/images/hero-light.webp" : "/images/hero-dark.webp"}
+                src={one ? "/images/hero-light-wide.webp" : "/images/hero-dark.webp"}
                 alt="Corner of a white rendered house with a dark half-round gutter and downpipe. Illustrative image."
                 fill
                 priority
@@ -122,23 +173,7 @@ export function HomePage({ variant }: { variant: Variant }) {
               <p className="assess__lede">
                 <Lines text={c.assessment.lede} />
               </p>
-              <ol className="steps">
-                {c.assessment.steps.map((s, i) => (
-                  <li key={s.title} className="step">
-                    <div className="step__body">
-                      <p className="step__title">
-                        <Lines text={s.title} />
-                      </p>
-                      {s.text && (
-                        <p className="step__text">
-                          <Lines text={s.text} />
-                        </p>
-                      )}
-                    </div>
-                    {i < c.assessment.steps.length - 1 && <Arrow className="step__arrow" />}
-                  </li>
-                ))}
-              </ol>
+              <Steps steps={c.assessment.steps} />
             </div>
           </section>
 
@@ -197,30 +232,7 @@ export function HomePage({ variant }: { variant: Variant }) {
           </section>
         </main>
 
-        <footer className="site-footer">
-          {!one && (
-            <div className="site-footer__rule" aria-hidden="true">
-              <svg viewBox="0 0 132 17" preserveAspectRatio="none" className="site-footer__roof">
-                <path d="M0 16 L48 1 L86.5 16 H132" />
-              </svg>
-            </div>
-          )}
-          <div className="site-footer__inner">
-            <a href="#top" className="site-footer__brand" aria-label="Cape Gutters, back to top">
-              <Logo />
-            </a>
-            <nav aria-label="Footer">
-              <ul className="site-footer__nav">
-                {NAV.map((n) => (
-                  <li key={n.href}>
-                    <a href={n.href}>{n.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <p className="site-footer__note">{c.footerNote}</p>
-          </div>
-        </footer>
+        <SiteFooter variant={variant} />
       </div>
     </EnquiryProvider>
   );

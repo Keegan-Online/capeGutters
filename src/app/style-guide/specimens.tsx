@@ -17,7 +17,11 @@ export function QuoteSpecimen() {
 export function AreaActionSpecimen() {
   const { goToForm } = useEnquiry();
   return (
-    <button type="button" className="link-action" onClick={() => goToForm({ area: "Southern Suburbs", focus: "suburb" })}>
+    <button
+      type="button"
+      className="link-action"
+      onClick={() => goToForm({ area: "Southern Suburbs", focus: "suburb" })}
+    >
       Use this area in my enquiry
       <Arrow className="link-action__arrow" />
     </button>

@@ -13,7 +13,13 @@
 ## Decisions
 
 - 2026-10-15: Next.js 16 + Tailwind 4 base, hand-written CSS system. Reason: pixel-matching two mockups is clearer in one token-driven stylesheet than in utility classes.
-- 2026-10-15: Scale rule. Desktop (900px and up) uses 1 mockup px = `min(100cqw, 1440px) / 765`. Layout and headings scale fully; ledes and titles cap at 1.82px per mockup px, body text at 1.7px. Straight scaling gives a 23px nav and 24px body text at 1440. Line breaks are fixed with `|` markers so they match the mockups whatever the text size.
+- 2026-10-15: Scale rule. Desktop (900px and up) uses 1 mockup px = `min(100cqw, 1440px) / 765`. Layout and headings scale fully. Ledes and titles cap at 1.86px per mockup px and body text at 1.8px, which is about 96% of the mockup at 1440 (raised after the review). Line breaks are fixed with `|` markers, so they match the mockups whatever the text size.
+- 2026-10-15: The header has three tiers, because the full nav plus the version switch only fits from about 1360px:
+  - from 1360px: the full mockup nav plus the version switch;
+  - 900 to 1359px: logo, version switch, quote button and a Menu for the section links;
+  - under 900px: logo and Menu.
+- 2026-10-15: The page 1 hero photo's sky was extended on the left (mirrored and blended), so the house sits where the mockup has it and the gutter clears the lede at 1024px. Above 1440px the hero photo keeps its 1440 composition, anchored right. The extra width is sky on page 1 and charcoal on page 2.
+- 2026-10-15: Buttons are 700 weight and at least 18.7px. White on the mockup orange is 3.2:1, which passes only as large text.
 - 2026-10-15: Below 900px a deliberate stacked layout with fixed px sizes. A literal 765px viewport therefore shows the tablet layout; the desktop composition is compared at 1440 scaled to 765.
 - 2026-10-15: Photos regenerated at full resolution from the mockup crops (Codex image generation). Page 1 uses three distinct gutter photos and page 2 uses two.
 - 2026-10-15: Map coastline from OpenStreetMap (ODbL, credited in the caption). Eight simplified regions clipped to the real coast: the mockup's four (Cape Town, Northern Suburbs, Southern Suburbs, South Peninsula) plus Atlantic Seaboard, Blaauwberg, Cape Flats and Helderberg, so the land is fully covered.

@@ -29,9 +29,9 @@ const LABELS: Record<string, Partial<Record<View, LabelTweak>>> = {
     tall: { at: [17.0, 46.8], side: "left", water: true },
   },
   "southern-suburbs": { wide: { at: [23.8, 48.6] }, tall: { at: [23.6, 47.8] } },
-  "cape-flats": { wide: { at: [37.2, 53.6] }, tall: { at: [35.8, 54.2] } },
+  "cape-flats": { wide: { at: [37.2, 53.6] }, tall: { at: [29.8, 55.2] } },
   "south-peninsula": { wide: { at: [21.2, 67.4], water: true }, tall: { at: [21.2, 69.5], water: true } },
-  helderberg: { wide: { at: [61.4, 56.2], side: "left" }, tall: { at: [60.5, 58.6], side: "left" } },
+  helderberg: { wide: { at: [61.4, 56.2], side: "left" }, tall: { at: [63.2, 56], side: "left" } },
 };
 
 function useView(): View {
@@ -107,6 +107,48 @@ export function AreaMap({
 
   return (
     <section id={sectionId} className="areas" aria-labelledby={`${sectionId}-title`}>
+      <div className="areas__copy">
+        <h2 id={`${sectionId}-title`} className="h-areas">
+          {title[0]}
+          <br />
+          {title[1].replace(/\.$/, "")}
+          <span className="dot">.</span>
+        </h2>
+        <p className="areas__lede">
+          <Lines text={lede} />
+        </p>
+
+        <div className="areas__readout" aria-live="polite">
+          {selectedRegion ? (
+            <>
+              <p className="areas__picked">
+                <span className="sr-only">Selected area: </span>
+                <span className="areas__picked-dot" aria-hidden="true" />
+                <span className="areas__picked-name">{selectedRegion.name}</span>
+              </p>
+              {area === selectedRegion.name ? (
+                <p className="areas__used">Added to your enquiry. Add your suburb in the form.</p>
+              ) : (
+                <button
+                  type="button"
+                  className="link-action"
+                  onClick={() => goToForm({ area: selectedRegion.name, focus: "suburb" })}
+                >
+                  Use this area in my enquiry
+                  <Arrow className="link-action__arrow" />
+                </button>
+              )}
+            </>
+          ) : (
+            <p className="areas__hint">Select an area on the map to add it to your enquiry.</p>
+          )}
+        </div>
+
+        <p className="areas__caption">
+          <span className="areas__caption-line">{caption} Areas are a guide, not service boundaries.</span>
+          <span className="areas__credit">Coastline © OpenStreetMap contributors.</span>
+        </p>
+      </div>
       <div className="areas__stage" ref={stageRef} data-view={view}>
         <svg
           className="areas__svg"
@@ -172,7 +214,7 @@ export function AreaMap({
           <div className="areas__labels">
             {(
               [
-                ["Table Bay", PLACES.tableBay],
+                ["Table Bay", view === "tall" ? ([16.2, 34.8] as const) : PLACES.tableBay],
                 ["False Bay", PLACES.falseBay],
               ] as const
             ).map(([name, [x, y]]) => {
@@ -211,51 +253,6 @@ export function AreaMap({
             })}
           </div>
         )}
-      </div>
-
-      <div className="areas__copy">
-        <h2 id={`${sectionId}-title`} className="h-areas">
-          {title[0]}
-          <br />
-          {title[1].replace(/\.$/, "")}
-          <span className="dot">.</span>
-        </h2>
-        <p className="areas__lede">
-          <Lines text={lede} />
-        </p>
-
-        <div className="areas__readout" aria-live="polite">
-          {selectedRegion ? (
-            <>
-              <p className="areas__picked">
-                <span className="sr-only">Selected area: </span>
-                <span className="areas__picked-dot" aria-hidden="true" />
-                <span className="areas__picked-name">{selectedRegion.name}</span>
-              </p>
-              {area === selectedRegion.name ? (
-                <p className="areas__used">Added to your enquiry. Add your suburb in the form.</p>
-              ) : (
-                <button
-                  type="button"
-                  className="link-action"
-                  onClick={() => goToForm({ area: selectedRegion.name, focus: "suburb" })}
-                >
-                  Use this area in my enquiry
-                  <Arrow className="link-action__arrow" />
-                </button>
-              )}
-            </>
-          ) : (
-            <p className="areas__hint">Select an area on the map to add it to your enquiry.</p>
-          )}
-        </div>
-
-        <p className="areas__caption">
-          <span className="areas__caption-line">
-            {caption} Areas are a guide, not service boundaries.
-          </span>
-          <span className="areas__credit">Coastline © OpenStreetMap contributors.</span>
-        </p>
       </div>
     </section>
   );

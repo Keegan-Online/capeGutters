@@ -24,7 +24,7 @@
   --bg: #fcfbfa;
   --ink: #161513;
   --ink-soft: #2e3037;
-  --muted: #696c74;
+  --muted: #5f626a;
   --rule: #8f8d8c;
   --rule-soft: #c9c7c5;
   --header-bg: #fcfbfa;
@@ -211,8 +211,8 @@
   padding: 0 24px;
   background: var(--orange);
   color: #fff;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18.7px;
+  font-weight: 700;
   letter-spacing: -0.01em;
   border-radius: 2px;
   transition:
@@ -269,11 +269,13 @@
     0 12px 30px -16px rgba(0, 0, 0, 0.7);
 }
 .site-header__inner {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
   height: 64px;
   padding: 0 var(--gutter);
+  background: var(--header-bg);
 }
 .site-header__brand {
   margin-right: auto;
@@ -337,6 +339,13 @@
 }
 .cg[data-variant="two"] .mobile-menu {
   border-bottom-color: var(--rule);
+}
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(20, 18, 15, 0.42);
+  animation: labels-in 0.25s var(--ease);
 }
 @keyframes menu-in {
   from {
@@ -442,11 +451,11 @@
 .hero__side {
   position: absolute;
   z-index: 1;
-  right: 12px;
+  right: 16px;
   bottom: 26px;
   display: grid;
   gap: 2px;
-  font-size: 10.5px;
+  font-size: 11px;
   line-height: 1.6;
   color: #34332f;
   text-align: left;
@@ -577,7 +586,7 @@
   color: var(--ink);
 }
 .cg[data-variant="two"] .unsure strong {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* ---------- Assessment ---------- */
@@ -776,7 +785,7 @@
   gap: 10px;
   min-height: 44px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--orange);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
@@ -790,7 +799,7 @@
   transform: translateX(3px);
 }
 .cg[data-variant="one"] .link-action {
-  color: #c4521a;
+  color: #b34914;
 }
 .areas__used {
   margin-top: 10px;
@@ -1140,7 +1149,11 @@
 }
 .field:focus-within {
   border-color: var(--orange);
-  box-shadow: 0 0 0 1px var(--orange);
+  box-shadow: 0 0 0 1.5px var(--orange);
+}
+.cg .field input:focus-visible,
+.cg .field textarea:focus-visible {
+  outline: none;
 }
 .field__label {
   flex: none;
@@ -1316,8 +1329,8 @@
 @media (min-width: 900px) {
   .cg {
     --s: calc(min(100cqw, 1440px) / 765);
-    --m: min(var(--s), 1.82px);
-    --t: min(var(--s), 1.7px);
+    --m: min(var(--s), 1.86px);
+    --t: min(var(--s), 1.8px);
     --h: min(var(--s), 1.7px);
     --edge: max(0px, (100cqw - 1440px) / 2);
     --x: calc(var(--edge) + 34 * var(--s));
@@ -1329,38 +1342,43 @@
     display: block;
   }
 
-  /* Header */
+  /* Header. 900 to 1359px: compact (version switch, quote, Menu for sections).
+     From 1360px: the full mockup header plus the version switch. */
   .site-header__inner {
+    position: relative;
     height: calc(59 * var(--h));
     padding: 0 var(--x);
-    gap: 0;
+    gap: calc(22 * var(--h));
+    background: var(--header-bg);
   }
   .cg[data-variant="two"] .site-header__inner {
     height: calc(54 * var(--h));
   }
+  .site-header__brand {
+    flex: none;
+  }
   .site-header .logo {
-    font-size: calc(21.5 * var(--h));
+    font-size: calc(23 * var(--h));
   }
   .cg[data-variant="two"] .site-header .logo {
-    font-size: calc(19 * var(--h));
-  }
-  .menu-toggle,
-  .mobile-menu {
-    display: none !important;
+    font-size: calc(20.5 * var(--h));
   }
   .site-header__nav {
     display: flex;
     align-items: center;
-    gap: calc(30 * var(--h));
-    margin-right: calc(36 * var(--h));
+    gap: calc(28 * var(--h));
+    flex: none;
+  }
+  .site-header__nav .nav {
+    display: none;
   }
   .nav {
-    display: flex;
-    gap: calc(30 * var(--h));
+    gap: calc(28 * var(--h));
   }
   .nav__link {
-    font-size: calc(12 * var(--t));
+    font-size: max(15px, calc(10.8 * var(--h)));
     color: var(--nav-ink);
+    white-space: nowrap;
     transition: color 0.2s;
   }
   .nav__link:hover {
@@ -1370,19 +1388,15 @@
     display: flex;
     align-items: center;
     gap: calc(16 * var(--h));
-    padding-left: calc(26 * var(--h));
-    border-left: 1px solid var(--rule-soft);
     height: calc(20 * var(--h));
-  }
-  .cg[data-variant="two"] .site-header__nav .versions {
-    border-left-color: var(--rule);
   }
   .site-header__nav .versions__link {
     position: relative;
-    font-size: calc(10.4 * var(--t));
+    font-size: max(13.5px, calc(9.8 * var(--h)));
     font-weight: 500;
     color: var(--muted);
     padding: 6px 0;
+    white-space: nowrap;
     transition: color 0.2s;
   }
   .cg[data-variant="two"] .site-header__nav .versions__link {
@@ -1406,9 +1420,62 @@
   }
   .btn--header {
     display: inline-flex;
+    flex: none;
     height: calc(34 * var(--h));
-    padding: 0 calc(21 * var(--h));
-    font-size: calc(12.4 * var(--t));
+    padding: 0 calc(20 * var(--h));
+    font-size: max(18.7px, calc(11.6 * var(--h)));
+  }
+  .btn--header .btn__arrow {
+    display: none;
+  }
+  .menu-toggle {
+    flex: none;
+    padding: 0 4px;
+  }
+  .menu-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  .mobile-menu {
+    left: auto;
+    right: var(--x);
+    width: 320px;
+    border: 1px solid var(--rule-soft);
+    border-top: 0;
+  }
+  .mobile-menu__versions,
+  .mobile-menu > .btn {
+    display: none;
+  }
+
+  @media (min-width: 1360px) {
+    .site-header__nav {
+      margin-left: auto;
+    }
+    .site-header__nav .nav {
+      display: flex;
+    }
+    .site-header__nav .versions {
+      padding-left: calc(22 * var(--h));
+      border-left: 1px solid var(--rule-soft);
+    }
+    .cg[data-variant="two"] .site-header__nav .versions {
+      border-left-color: var(--rule);
+    }
+    .site-header__inner {
+      gap: calc(30 * var(--h));
+    }
+    .cg[data-variant="one"] .btn--header .btn__arrow {
+      display: block;
+    }
+    .menu-toggle,
+    .mobile-menu,
+    .menu-backdrop {
+      display: none !important;
+    }
   }
 
   /* Hero */
@@ -1482,13 +1549,13 @@
     height: calc(40.5 * var(--s));
     padding: 0 calc(24 * var(--s));
     gap: calc(11 * var(--s));
-    font-size: calc(14.5 * var(--t));
+    font-size: max(18.7px, calc(14.5 * var(--t)));
   }
   .cg[data-variant="two"] .btn--hero {
     margin-top: calc(20.75 * var(--s));
     height: calc(45 * var(--s));
     padding: 0 calc(31 * var(--s));
-    font-size: calc(15 * var(--t));
+    font-size: max(18.7px, calc(15 * var(--t)));
   }
   .hero__foot {
     margin-top: calc(35.5 * var(--s));
@@ -1698,6 +1765,12 @@
   }
   .cg[data-variant="two"] .assess__lede {
     margin-top: calc(7.4 * var(--s));
+    font-size: calc(16.5 * var(--m));
+    line-height: 1.3;
+  }
+  .cg[data-variant="two"] :is(.h-assess, .h-faqs) {
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
   .cg[data-variant="two"] .steps {
     margin-top: calc(18.5 * var(--s));
@@ -2015,7 +2088,7 @@
   .enquiry .btn--block {
     margin-top: calc(5 * var(--s));
     height: calc(37 * var(--s));
-    font-size: calc(14.5 * var(--t));
+    font-size: max(18.7px, calc(14.5 * var(--t)));
   }
   .enquiry__mode {
     font-size: max(12px, calc(8.6 * var(--t)));
@@ -2063,7 +2136,7 @@
   .cg[data-variant="two"] .enquiry .btn--block {
     margin-top: calc(4 * var(--s));
     height: calc(45 * var(--s));
-    font-size: calc(15 * var(--t));
+    font-size: max(18.7px, calc(15 * var(--t)));
   }
 
   /* Footer */
@@ -2122,10 +2195,24 @@
   }
 }
 
-/* Wide screens: keep the composition centred, let full-bleed pieces bleed. */
+/* Wide screens: the hero photo keeps its 1440 composition, anchored right.
+   The extra width on the left is the photo's own sky (page 1) or charcoal (page 2). */
 @media (min-width: 1441px) {
-  .cg[data-variant="one"] .hero__img {
-    object-position: 50% 58%;
+  .hero__media {
+    left: auto;
+    width: 1440px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 160px);
+    mask-image: linear-gradient(90deg, transparent 0, #000 160px);
+  }
+  .cg[data-variant="one"] .hero {
+    background: linear-gradient(180deg, #bdd8f6 0%, #cde1f8 40%, #d6e2ea 72%, #aab597 100%);
+  }
+  .hero__side,
+  .cg[data-variant="two"] .hero__side {
+    left: calc(100% - 1440px + 1253px);
+  }
+  .cg[data-variant="two"] .hero__side {
+    left: calc(100% - 1440px + 1224px);
   }
 }
 

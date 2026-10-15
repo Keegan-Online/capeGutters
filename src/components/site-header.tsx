@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Arrow, Logo } from "./icons";
 import { NAV, VERSIONS, type Variant } from "./content";
 
@@ -10,6 +10,7 @@ export function SiteHeader({ variant }: { variant: Variant }) {
   const [scrolled, setScrolled] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const menuId = `menu${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -26,7 +27,7 @@ export function SiteHeader({ variant }: { variant: Variant }) {
         toggleRef.current?.focus();
       }
     };
-    const onResize = () => window.innerWidth >= 900 && setOpen(false);
+    const onResize = () => window.innerWidth >= 1360 && setOpen(false);
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     panelRef.current?.querySelector<HTMLElement>("a")?.focus();
@@ -83,7 +84,7 @@ export function SiteHeader({ variant }: { variant: Variant }) {
           type="button"
           className="menu-toggle"
           aria-expanded={open}
-          aria-controls="mobile-menu"
+          aria-controls={menuId}
           onClick={() => setOpen((o) => !o)}
         >
           <span className="menu-toggle__label">{open ? "Close" : "Menu"}</span>
@@ -94,7 +95,8 @@ export function SiteHeader({ variant }: { variant: Variant }) {
         </button>
       </div>
 
-      <div id="mobile-menu" ref={panelRef} className="mobile-menu" hidden={!open}>
+      {open && <div className="menu-backdrop" onClick={close} aria-hidden="true" />}
+      <div id={menuId} ref={panelRef} className="mobile-menu" hidden={!open}>
         <ul className="mobile-menu__nav">
           {NAV.map((n) => (
             <li key={n.href}>

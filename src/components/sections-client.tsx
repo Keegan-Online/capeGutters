@@ -24,7 +24,7 @@ export function ServiceList({ items, variant }: { items: Record<ServiceId, strin
                 <Lines text={items[id]} />
               </span>
               <Arrow className="service__arrow" />
-              <span className="sr-only">. Start a quote request for this.</span>
+              <span className="sr-only"> Start a quote request for this.</span>
             </button>
           </li>
         ))}

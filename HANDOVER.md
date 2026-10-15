@@ -13,7 +13,7 @@
 - `src/components/content.ts` holds all wording, verbatim from the mockups. A `|` marks a desktop line break.
 - `src/styles/home.css` is the whole visual system: tokens per variant, mobile first, and the desktop composition in mockup units (`--s`). See DECISIONS.md for the scale rule.
 - `src/components/area-map/`: real OSM coastline. `node scripts/build-map.mjs` regenerates `geo.ts`. The region outlines live in that script.
-- `src/app/actions.ts`: the enquiry server action. Set `ENQUIRY_WEBHOOK_URL` to deliver for real. Without it the form is labelled DEMO and says nothing was sent.
+- `src/app/actions.ts`: the enquiry server action. Set `ENQUIRY_WEBHOOK_URL` (before building, since the pages prerender) to deliver for real. Without it the form is labelled DEMO and says nothing was sent.
 
 ## Run and check
 

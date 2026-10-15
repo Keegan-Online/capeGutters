@@ -1,6 +1,6 @@
 # Progress
 
-**Status:** both pages built and tested locally at 1440 and 390. Style guide done. Whole-journey review and director sign-off in progress.
+**Status:** both pages built and tested locally. Checked at 390, 900, 1024, 1280, 1366, 1440 and 1920. Style guide and DESIGN.md done. The review findings are fixed, and director sign-off is next.
 
 ## Open gaps (DEMO or unconfirmed)
 

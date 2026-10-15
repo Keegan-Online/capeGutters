@@ -7,7 +7,7 @@ export function LogoMark(props: SVGProps<SVGSVGElement>) {
       <path
         d="M1.5 30.4 39.4 2.2 53.9 16.4H75.4M67.8 16.4V29.4H62.6"
         stroke="currentColor"
-        strokeWidth="3.1"
+        strokeWidth="4.2"
         strokeLinejoin="miter"
         strokeMiterlimit="10"
       />

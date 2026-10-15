@@ -132,3 +132,48 @@
 .sg-map .areas {
   --s: calc(min(100cqw, 1440px) / 765);
 }
+
+.sg .site-header {
+  position: relative;
+  top: auto;
+}
+.sg-flush {
+  padding-left: 0;
+  padding-right: 0;
+}
+.sg-flush .sg-label {
+  padding: 0 28px;
+}
+.sg-steps .steps {
+  margin-top: 0;
+}
+.cg[data-variant="one"] .sg-steps {
+  background: var(--band);
+  color: var(--band-ink);
+}
+.cg[data-variant="two"] .sg-steps {
+  background: var(--ivory);
+  color: var(--dark-ink);
+}
+.cg[data-variant="one"] .sg-steps .sg-label {
+  color: rgba(242, 240, 237, 0.7);
+}
+.sg-quote,
+.sg-quote * {
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .sg-block {
+    padding: 22px 16px;
+  }
+  .sg-flush .sg-label,
+  .sg-map .sg-label {
+    padding: 0 16px;
+  }
+  .cg[data-variant="one"] .sg-quote {
+    padding: 12px !important;
+  }
+  .sg-swatches {
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  }
+}

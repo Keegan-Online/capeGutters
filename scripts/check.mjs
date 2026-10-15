@@ -202,9 +202,9 @@ const browser = await chromium.launch({ channel: "chrome" });
   check("Mobile P1: no horizontal scroll", overflow <= 0, `overflow=${overflow}`);
 
   await page.getByRole("button", { name: /Menu/ }).tap();
-  const menuVisible = await page.locator("#mobile-menu").isVisible();
+  const menuVisible = await page.locator(".mobile-menu").isVisible();
   check("Mobile: menu opens", menuVisible);
-  await page.locator("#mobile-menu").getByRole("link", { name: "Home page 2" }).tap();
+  await page.locator(".mobile-menu").getByRole("link", { name: "Home page 2" }).tap();
   await page.waitForURL("**/home-page-2");
   check("Mobile: menu switches to Home page 2", page.url().endsWith("/home-page-2"));
 
@@ -212,10 +212,10 @@ const browser = await chromium.launch({ channel: "chrome" });
   check("Mobile P2: no horizontal scroll", overflow2 <= 0, `overflow=${overflow2}`);
 
   await page.getByRole("button", { name: /Menu/ }).tap();
-  await page.locator("#mobile-menu").getByRole("link", { name: "Areas" }).tap();
+  await page.locator(".mobile-menu").getByRole("link", { name: "Areas" }).tap();
   await page.waitForTimeout(900);
   const aTop = await page.locator("#areas").evaluate((el) => el.getBoundingClientRect().top);
-  const menuClosed = await page.locator("#mobile-menu").isHidden();
+  const menuClosed = await page.locator(".mobile-menu").isHidden();
   check(
     "Mobile: menu link reaches Areas and closes menu",
     aTop > -4 && aTop < 90 && menuClosed,
