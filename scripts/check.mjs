@@ -19,11 +19,11 @@ const browser = await chromium.launch({ channel: "chrome" });
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 
-  await page.goto(base + "/", { waitUntil: "networkidle" });
-  check("/ opens Home page 1", page.url().endsWith("/home-page-1"), page.url());
+  await page.goto(base + "/home-page-1", { waitUntil: "networkidle" });
+  check("Old /home-page-1 link opens the variation", page.url().endsWith("/variations/home-page-1"), page.url());
 
   for (const variant of ["1", "2"]) {
-    await page.goto(`${base}/home-page-${variant}`, { waitUntil: "networkidle" });
+    await page.goto(`${base}/variations/home-page-${variant}`, { waitUntil: "networkidle" });
     const header = page.locator(".site-header");
     const current = await header.locator('.site-header__nav [aria-current="page"]').innerText();
     check(`P${variant}: active version marked in header`, current.trim() === `Home page ${variant}`, current);
@@ -177,8 +177,8 @@ const browser = await chromium.launch({ channel: "chrome" });
       .locator(".site-header__nav")
       .getByRole("link", { name: `Home page ${other}` })
       .click();
-    await page.waitForURL(`**/home-page-${other}`);
-    check(`P${variant}: header switches to Home page ${other}`, page.url().endsWith(`/home-page-${other}`));
+    await page.waitForURL(`**/variations/home-page-${other}`);
+    check(`P${variant}: header switches to Home page ${other}`, page.url().endsWith(`/variations/home-page-${other}`));
   }
 
   check("No console or page errors (desktop)", errors.length === 0, errors.slice(0, 2).join(" | "));
@@ -196,7 +196,7 @@ const browser = await chromium.launch({ channel: "chrome" });
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(`${base}/home-page-1`, { waitUntil: "networkidle" });
+  await page.goto(`${base}/variations/home-page-1`, { waitUntil: "networkidle" });
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   check("Mobile P1: no horizontal scroll", overflow <= 0, `overflow=${overflow}`);
@@ -205,8 +205,8 @@ const browser = await chromium.launch({ channel: "chrome" });
   const menuVisible = await page.locator(".mobile-menu").isVisible();
   check("Mobile: menu opens", menuVisible);
   await page.locator(".mobile-menu").getByRole("link", { name: "Home page 2" }).tap();
-  await page.waitForURL("**/home-page-2");
-  check("Mobile: menu switches to Home page 2", page.url().endsWith("/home-page-2"));
+  await page.waitForURL("**/variations/home-page-2");
+  check("Mobile: menu switches to Home page 2", page.url().endsWith("/variations/home-page-2"));
 
   const overflow2 = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   check("Mobile P2: no horizontal scroll", overflow2 <= 0, `overflow=${overflow2}`);
@@ -250,7 +250,7 @@ const browser = await chromium.launch({ channel: "chrome" });
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
   const page = await ctx.newPage();
-  await page.goto(`${base}/home-page-2`, { waitUntil: "networkidle" });
+  await page.goto(`${base}/variations/home-page-2`, { waitUntil: "networkidle" });
   await page.locator(".map-label", { hasText: "Cape Town" }).click();
   const dur = await page.locator(".map-active").evaluate((el) => getComputedStyle(el).animationDuration);
   check("Reduced motion: map highlight has no animation", parseFloat(dur) < 0.01, dur);

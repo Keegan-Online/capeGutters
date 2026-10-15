@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Archivo, Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -10,9 +10,17 @@ const inter = Inter({
   display: "swap",
 });
 
+// Brand face for the proposed wordmark only, set slightly expanded.
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  axes: ["wdth"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Cape Gutters | Gutters for Cape Town homes",
-  description: "New gutters, replacements, repairs and cleaning for Cape Town homes. Pitch concept.",
+  title: "Cape Gutters | Every roofline. Considered.",
+  description: "Gutter installation, replacement, repairs and cleaning in Cape Town. Pitch concept.",
   robots: { index: false, follow: false },
 };
 
@@ -25,7 +33,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-ZA" className={inter.variable}>
+    <html lang="en-ZA" className={`${inter.variable} ${archivo.variable}`}>
       <body>{children}</body>
     </html>
   );

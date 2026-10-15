@@ -7,7 +7,7 @@ import fs from "node:fs";
 const out = process.argv[2] ?? "screens";
 const base = process.argv[3] ?? "http://localhost:3217";
 const widths = (process.env.WIDTHS ?? "1440,390,765").split(",").map(Number);
-const pages = (process.env.PAGES ?? "home-page-1,home-page-2").split(",");
+const pages = (process.env.PAGES ?? "variations/home-page-1,variations/home-page-2").split(",");
 fs.mkdirSync(out, { recursive: true });
 
 // Uses the installed Google Chrome (no Playwright browser download needed).
@@ -31,7 +31,7 @@ for (const w of widths) {
       window.scrollTo(0, 0);
     });
     await page.waitForTimeout(500);
-    await page.screenshot({ path: `${out}/${p}-${w}.png`, fullPage: true });
+    await page.screenshot({ path: `${out}/${p.replaceAll("/", "_") || "home"}-${w}.png`, fullPage: true });
     console.log("shot", p, w);
   }
   await ctx.close();

@@ -142,8 +142,8 @@ export const COPY: Record<Variant, Copy> = {
 export const NOT_SURE = { lead: "Not sure?", rest: "Tell us what happens when it rains." };
 
 export const VERSIONS = [
-  { href: "/home-page-1", label: "Home page 1", variant: "one" as const },
-  { href: "/home-page-2", label: "Home page 2", variant: "two" as const },
+  { href: "/variations/home-page-1", label: "Home page 1", variant: "one" as const },
+  { href: "/variations/home-page-2", label: "Home page 2", variant: "two" as const },
 ];
 
 export const NAV = [

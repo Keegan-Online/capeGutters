@@ -1,11 +1,9 @@
 "use client";
 
-import { useActionState, useEffect, useId, useRef, useState, type FormEvent } from "react";
-import { submitEnquiry, type EnquiryState } from "@/app/actions";
 import { Arrow } from "../icons";
 import { SERVICE_TITLES, type Variant } from "../content";
-import { useEnquiry } from "./enquiry-context";
-import { validateEnquiry, type EnquiryErrors, type FieldName } from "./validate";
+import { useEnquiryForm } from "./use-enquiry-form";
+import type { FieldName } from "./validate";
 
 const FIELDS: {
   name: FieldName;
@@ -20,59 +18,22 @@ const FIELDS: {
   { name: "message", label: "What needs attention?", multiline: true },
 ];
 
-const EMPTY: Record<FieldName, string> = {
-  name: "",
-  contact: "",
-  suburb: "",
-  message: "",
-};
-
 export function EnquiryForm({ variant, deliveryConfigured }: { variant: Variant; deliveryConfigured: boolean }) {
-  const { service, area, setService, setArea, registerForm } = useEnquiry();
-  const [values, setValues] = useState(EMPTY);
-  const [clientErrors, setClientErrors] = useState<EnquiryErrors>({});
-  const [showResult, setShowResult] = useState(false);
-  const [state, formAction, pending] = useActionState<EnquiryState, FormData>(
-    async (prev, fd) => {
-      const next = await submitEnquiry(prev, fd);
-      // Only a real delivery clears the form. Demo, invalid and failed keep every value.
-      if (next.status === "sent") {
-        setValues(EMPTY);
-        setService(null);
-        setArea(null);
-      }
-      setShowResult(true);
-      return next;
-    },
-    { status: "idle" },
-  );
-  const formRef = useRef<HTMLFormElement>(null);
-  const uid = useId();
-
-  useEffect(() => registerForm(formRef.current), [registerForm]);
-
-  // Server is the source of truth once it has answered.
-  const serverErrors = state.status === "invalid" ? state.errors : {};
-  const errors: EnquiryErrors = { ...serverErrors, ...clientErrors };
-
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    const found = validateEnquiry(values);
-    setClientErrors(found);
-    if (Object.keys(found).length) {
-      e.preventDefault();
-      setShowResult(false);
-      const first = FIELDS.find((f) => found[f.name]);
-      if (first) (formRef.current?.elements.namedItem(first.name) as HTMLElement | null)?.focus();
-    }
-  }
-
-  function update(name: FieldName, value: string) {
-    setValues((v) => ({ ...v, [name]: value }));
-    setShowResult(false);
-    if (clientErrors[name]) setClientErrors((errs) => ({ ...errs, [name]: undefined }));
-  }
-
-  const result = showResult && !pending ? state.status : "idle";
+  const {
+    service,
+    area,
+    setService,
+    setArea,
+    values,
+    errors,
+    update,
+    onSubmit,
+    formAction,
+    pending,
+    result,
+    formRef,
+    uid,
+  } = useEnquiryForm();
 
   return (
     <form

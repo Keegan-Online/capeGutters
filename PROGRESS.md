@@ -1,18 +1,25 @@
 # Progress
 
-**Status:** Built. Tested locally: 54/54 behaviour checks, `next build`, and widths 390 to 2560. Director signed off on 2026-10-15 (commit 8a40c3e). Waiting for Keegan's review. Not deployed (local only).
+**Status:** final site built on branch `final-site` and tested locally:
+- 24/24 checks in `scripts/check-final.mjs`, at 1440 and 390;
+- the variations still pass `scripts/check.mjs`;
+- no console errors.
+
+Waiting on Keegan's review on localhost. No Netlify deploy until he approves. Director and reviewer passes on the final site are still to run.
+
+## Built
+
+- `/`: the final homepage from the Architectural Authority mockup.
+- `/style-guide`: the proposed identity, every component, and the motion notes.
+- `/variations`: the tab for the two earlier homepages, at `/variations/home-page-1` and `/variations/home-page-2`. The old URLs redirect there.
+- **Gutter section drawing.** An authored 2D eaves detail. The orange reveal plays once on entering view (about 3s), then holds. Reduced motion shows the finished drawing.
 
 ## Open gaps (DEMO or unconfirmed)
 
-- Enquiry delivery: not connected. Set `ENQUIRY_WEBHOOK_URL` to send for real. Until then the form says DEMO.
-- Services and assessment steps are proposals until Cape Gutters confirms them.
-- Map regions are geographic guides, not confirmed service areas.
-- Logo: rebuilt from the mockup mark. There is no confirmed client logo file.
-- Photography: generated and illustrative. Replace it with real Cape Gutters photos when available.
-- Keegan's map style reference screenshot was unreadable here. The map follows his written description.
-- Deliberate differences from the mockups:
-  - The open FAQ shows a minus, not the plus.
-  - Body text is about 4% under the mockup at 1440.
-  - The map is accurate, with 8 regions.
-  - The mobile hero is a 3:4 crop.
-  - The DEMO note adds about 25px to page 1's form band.
+- The enquiry form is DEMO until `ENQUIRY_WEBHOOK_URL` is set.
+- Services, materials, coverage, guarantees and contact details are proposals until Cape Gutters confirms them.
+- The wordmark and symbol are a proposed identity until the client's existing brand assets are confirmed.
+- Photography is generated and illustrative. Replace it with verified client photography.
+- Map regions are geographic guides, not service coverage.
+- The suburb search uses OpenStreetMap place names, plus 17 well-known names with approximate positions.
+- Keegan's original map style screenshot was never readable here.

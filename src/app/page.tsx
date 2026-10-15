@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
+import { SiteHome } from "@/components/site/site-home";
 
-// "/" opens Home page 1 (also redirected in next.config.ts).
-export default function Index() {
-  redirect("/home-page-1");
+export default function Home() {
+  return <SiteHome />;
 }

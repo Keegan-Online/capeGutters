@@ -1,52 +1,83 @@
-# Design system
+# Design system: Cape Gutters final site
 
-One system, two themes. Live reference: `/style-guide`. The source of truth is `src/styles/home.css`, with tokens per `[data-variant]`.
+The direction is Architectural Authority (`references/final/architectural-authority-mockup.png`). Live reference: `/style-guide`. Source: `src/styles/site.css`, scoped to `.site`. Components: `src/components/site/`. Everything here is a **proposed identity** until Cape Gutters' own brand assets are confirmed.
 
-## Themes
+## Idea
 
-| Token | Home page 1 (light) | Home page 2 (warm charcoal) |
+Authority through precision. The site is calm and architectural, and specific to gutters: a roofline you can trust, drawn like a technical detail. One orange line carries the brand, from the logo's gutter line to the hero's roofline and the drawn gutter system.
+
+## Identity
+
+- **Wordmark:** two rooflines over "CAPE GUTTERS".
+  - The charcoal line is a gable.
+  - The orange line is a second roof whose eave runs on as the gutter line, ending in a short downpipe drop.
+  - The type is Archivo 450, width 108, fitted exactly to the gutter line.
+  - It comes in light and dark tones. The symbol works alone for small sizes.
+  - Clear space: equal to the symbol height. Never recolour the orange line.
+- **Signature line:** a fine orange line that follows a gutter. Use it sparingly: the logo, the hero roofline, the gutter drawing, small rules.
+
+## Colour
+
+| Token | Hex | Use |
 | --- | --- | --- |
-| Background | `#fcfbfa` off-white | `#211e19` charcoal (services `#24211c`) |
-| Light section | none | `#f0ebe2` ivory (assessment, FAQs) |
-| Ink | `#161513` | `#f2efe7` on dark, `#15130f` on ivory |
-| Muted | `#5f626a` | `#d8d4cc` on dark, `#5d5b57` on ivory |
-| Orange | `#eb6826` (links `#b34914` for contrast) | `#ec6b2e` |
-| Band / rules | band `#352d27`, rules `#8f8d8c` | rules `#5d5852` on dark, `#cdc6ba` on ivory |
-| Map water / land | `#d3e4ec` / sand tints `#eedcc6` to `#f6eadb` | page charcoal / stone tints `#b8ad9c` to `#c9beb0` |
+| `--char` | `#1D1B17` | Dark sections, buttons, footer |
+| `--ink` | `#1C1A16` | Text on paper |
+| `--ink-2` | `#4A463F` | Secondary text on paper (AA) |
+| `--paper` | `#F3F0E9` | Page, light sections |
+| `--paper-2` | `#F8F6F0` | Form area, cards |
+| `--orange` | `#E8642A` | Accent, enquiry panel, line-work |
+| `--orange-deep` | `#D95A1E` | Large orange text on paper (3.4:1) |
+| `--orange-ink` | `#B4470F` | Small orange text and links (4.8:1) |
 
-Page 2 colours a closing full stop orange (`.dot`). Page 1 colours "Cape Town" orange in the hero.
+Text on the orange panel is white for the large heading and ink for body text. White body text on this orange fails AA.
 
 ## Type
 
-- Inter (variable, optical sizes). Page 1 headings are 800 with tight tracking (-0.035 to -0.04em). Page 2 headings are 600, or 700 on ivory, with near-normal tracking.
-- Small spaced captions: uppercase, 0.32em tracking. They are the mockups' own words. Never add new ones.
-- Buttons are 700 weight and at least 18.7px, so white on orange counts as large text.
+- Inter (variable, optical sizes) for everything except the wordmark.
+- **Display:** 650 weight, tight tracking (-0.038em, never past -0.04em).
+- **Sections:** 600 to 700 weight.
+- **Services:** 500 weight, large and quiet.
+- **Body:** 400 weight, at least 15px on any screen.
+- No decorative slogans and no eyebrow labels above headings.
 
-## Scale rule (desktop, 900px and up)
+## Scale
 
-- `--s` = one mockup px = `min(100cqw, 1440px) / 765`. Layout and headings use it.
-- `--m` (ledes, titles) is capped at 1.86px per mockup px. `--t` (body) is capped at 1.8px. `--h` (header) is capped at 1.7px.
-- Line breaks come from `|` markers in `content.ts`, so they match the mockups.
-- Header has three tiers:
-  - under 900px: logo and Menu;
-  - 900 to 1359px: logo, version switch, quote button and Menu;
-  - 1360px and up: the full mockup nav, plus the version switch.
+- Desktop (900px and up): 1 mockup px = `--s` = `min(100cqw, 1440px) / 763`.
+- Display text uses `--d` (capped at 1.85px). Titles use `--m` (1.8px). Body uses `--t` (1.75px), so text stays comfortable at 1440.
+- Line breaks follow the mockup through `|` markers.
+- Mobile (under 900px): stacked layouts in px with a 20px gutter. Spacing steps are 4, 8, 12, 16, 24, 32, 48, 72 and 96.
 
-## Shared pieces (`src/components/`)
+## Components
 
-- `SiteHeader`
-- `Logo` / `LogoMark` (the roofline mark redrawn from the mockup)
-- `.btn`
-- `ServiceList` (each row opens the form with that service as a chip)
-- `Steps`
-- `AreaMap` (OSM coastline, eight simplified regions, HTML labels, keyboard buttons)
-- `FaqAccordion`
-- `EnquiryForm` (inline persistent labels, chips, errors, the DEMO note)
-- `SiteFooter` (page 2 adds the roofline rule)
+| Component | Notes |
+| --- | --- |
+| `SiteHeader` | Sits over the hero, solid once scrolled. The **Variations** tab is set apart by a rule. Phones get a Menu panel with a backdrop. |
+| Buttons (`.btn-s`) | Charcoal, square corners, arrow icon. |
+| `ServiceRows` | Each row opens the enquiry with its service attached as a chip. |
+| `GutterDrawing` | An authored 2D section at the eaves (`gutter-detail.ts`): roof covering over the rafter and fascia, a K-style gutter as the focus, a socketed drop outlet, two 45° elbows back to the wall, a clip, and a gully hopper. Warm-white structure in thin strokes, a fine orange highlight and labelled leaders. |
+| `SiteMap` | OSM coastline, eight simplified regions. A suburb search (OSM place names) carries the area and suburb into the form. North arrow and a true scale bar. |
+| `SiteEnquiryForm` | Persistent labels, validation that keeps values. Shows DEMO until `ENQUIRY_WEBHOOK_URL` is set. |
+| `Faqs` | Open by default. Minus when open, plus when closed. |
+| `SiteFooter` | Charcoal footer. |
 
-Fix a shared piece, never one page's copy of it.
+Icons are drawn on a 24-unit grid with a 1.5 stroke and square ends.
 
 ## Motion
 
-- 200 to 350ms ease-out for: hover colour, the arrow nudge, map lift on hover or select, FAQ reveal, menu drop.
-- Reduced motion turns off animation and smooth scrolling.
+Motion follows the `animate` skill: a gate (should it move, and why), CSS first, and the shared tokens `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` and `--ease-in-out` `cubic-bezier(0.77, 0, 0.175, 1)`.
+
+| Moment | Purpose | Ingredients |
+| --- | --- | --- |
+| Hero entrance | Orientation, once | Rise 14px with opacity. 700ms `--ease-out`, staggered 70 to 220ms. |
+| Hero roofline | Explanation, once | Stroke draw, 1s `--ease-in-out`. |
+| Spec photos | Scroll reveal (marketing), once | Fade up 28px over 700 to 900ms `--ease-out`, the image settling from scale 1.04. The second photo follows 80ms later. |
+| Gutter drawing | Explanation, once on entering view | The white section never moves. The orange highlight draws in order: roof (950ms), then gutter and outlet (1950ms), with `--ease-in-out`. It then holds. |
+| Map region and callout | State and feedback, often repeated | Transitions only, with `@starting-style` on mount. Region 200ms. The card scales from 0.95 out of its pin over 200ms `--ease-out`, placed where it covers no label. |
+| Buttons and links | Feedback | Press to scale 0.98 over 160ms, arrows nudge 3px over 200ms. Hover motion is gated to fine pointers. |
+| FAQs and form | State | The answer opens by height over 280ms. An error nudges the field once. |
+
+There is no scroll-linked motion, no looping and no hover-only content. **Reduced motion** is fewer and gentler: photos keep a soft fade with no rise, the map card fades without scaling, and the gutter drawing and roofline are shown finished. Movement and arrow nudges are dropped.
+
+## Variations
+
+The two earlier homepages live under `/variations` with their own system in `src/styles/home.css`, scoped to `.cg`. That system is recorded at git tag `v1-variations`.
