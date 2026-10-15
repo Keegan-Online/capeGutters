@@ -456,7 +456,7 @@ body:has(.site) {
 .gd {
   position: relative;
   width: 100%;
-  aspect-ratio: 178.6 / 189.6;
+  aspect-ratio: 520 / 572;
 }
 .gd-svg {
   position: absolute;
@@ -465,86 +465,79 @@ body:has(.site) {
   height: 100%;
   overflow: visible;
 }
+.gd-svg path,
+.gd-svg line {
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+}
 .gd-grid line {
-  stroke: rgba(243, 240, 233, 0.045);
-  stroke-width: 0.25;
+  stroke: rgba(243, 240, 233, 0.028);
+  stroke-width: 1;
 }
-.gd-context path {
+/* Structure: restrained warm white, thin */
+.gd-struct path {
   fill: none;
-  stroke: rgba(243, 240, 233, 0.42);
-  stroke-width: 0.55;
-  stroke-linejoin: round;
+  stroke: rgba(243, 240, 233, 0.5);
+  stroke-width: 1;
 }
-.gd-orange {
+.gd-struct .gd-fill-soft {
+  fill: rgba(243, 240, 233, 0.045);
+}
+.gd-struct .gd-fill-only {
+  fill: rgba(243, 240, 233, 0.045);
+  stroke: none;
+}
+.gd-struct .gd-faint {
+  stroke: rgba(243, 240, 233, 0.24);
+}
+.gd-struct .gd-cut {
+  stroke: rgba(243, 240, 233, 0.42);
+}
+/* System: full warm white, same thin weight */
+.gd-system path {
+  fill: none;
+  stroke: rgba(243, 240, 233, 0.92);
+  stroke-width: 1.25;
+}
+.gd-system .gd-trough {
+  fill: rgba(243, 240, 233, 0.05);
+  stroke: none;
+}
+.gd-system .gd-pipe {
+  fill: rgba(243, 240, 233, 0.06);
+}
+.gd-system .gd-seam {
+  stroke: rgba(243, 240, 233, 0.6);
+  stroke-width: 1;
+}
+.gd-fittings path {
+  fill: var(--char);
+}
+.gd-fittings .gd-cover {
+  stroke: none;
+}
+/* Fine orange highlight */
+.gd-hl path {
   fill: none;
   stroke: var(--orange);
-  stroke-width: 1.5;
-  stroke-linejoin: round;
+  stroke-width: 1.6;
 }
-.gd-thin {
-  stroke-width: 0.75;
-}
-.gd-ivory {
+.gd-leaders path {
   fill: none;
   stroke: rgba(243, 240, 233, 0.7);
-  stroke-width: 0.5;
+  stroke-width: 0.9;
 }
-.gd-leader {
-  fill: none;
-  stroke: rgba(243, 240, 233, 0.75);
-  stroke-width: 0.45;
-}
-.gd-dot {
+.gd-leaders circle {
   fill: var(--ivory);
-}
-.gd-fill--roof {
-  fill: #2c2924;
-}
-.gd-fill--inside {
-  fill: #141310;
-}
-.gd-fill--front {
-  fill: rgba(232, 100, 42, 0.12);
-}
-.gd-fill--end {
-  fill: #2e2a25;
-}
-.gd-fill--side {
-  fill: #24211d;
-}
-.gd-fill--face {
-  fill: #2f2b26;
-}
-.gd-draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
 }
 .gd-label {
   position: absolute;
-  transform: translateY(-50%);
+  transform: translate(-100%, -50%);
   font-size: 13px;
   font-weight: 500;
   color: var(--ivory);
   white-space: nowrap;
-}
-/* One-time draw when in view: roof edge, gutter, outlet, downpipe (about 3.5s). */
-.gd[data-js] .gd-draw {
-  stroke-dashoffset: 1;
-}
-.gd[data-js] :is(.gd-fill, .gd-fade, .gd-label) {
-  opacity: 0;
-}
-.gd[data-js][data-inview] .gd-draw {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset var(--t) var(--ease-in-out) var(--d);
-}
-.gd[data-js][data-inview] .gd-fill {
-  opacity: 1;
-  transition: opacity calc(var(--t) * 0.8) ease calc(var(--d) + var(--t) * 0.35);
-}
-.gd[data-js][data-inview] :is(.gd-fade, .gd-label) {
-  opacity: 1;
-  transition: opacity 300ms ease calc(var(--d) + var(--t) * 0.85);
 }
 
 /* ---------- Specification ---------- */
@@ -1136,10 +1129,33 @@ body:has(.site) {
   background: var(--char);
   color: var(--ivory);
 }
+.sf {
+  padding-top: 28px;
+}
+.sf__line {
+  position: relative;
+  height: 0;
+  margin: 0 34cqw 0 var(--gutter);
+  border-top: 1px solid rgba(243, 240, 233, 0.32);
+}
+.sf__roof {
+  position: absolute;
+  left: 100%;
+  bottom: -1px;
+  width: 34cqw;
+  height: 17px;
+  overflow: visible;
+}
+.sf__roof path {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
 .sf__inner {
   display: grid;
   gap: 22px;
-  padding: 40px var(--gutter) 48px;
+  padding: 28px var(--gutter) 48px;
 }
 .sf__logo {
   width: 160px;
@@ -1545,11 +1561,22 @@ body:has(.site) {
   }
 
   /* Footer */
+  .sf {
+    padding-top: calc(26 * var(--s));
+  }
+  .sf__line {
+    margin: 0 0 0 var(--x);
+    width: calc(588 * var(--s));
+  }
+  .sf__roof {
+    width: calc(var(--edge) + 131.5 * var(--s));
+    height: calc(16.5 * var(--s));
+  }
   .sf__inner {
     display: flex;
     align-items: center;
     gap: 0;
-    height: calc(108 * var(--s));
+    height: calc(84 * var(--s));
     padding: 0 var(--x) calc(10 * var(--s)) calc(var(--edge) + 46.5 * var(--s));
   }
   .sf__logo {
@@ -1569,12 +1596,13 @@ body:has(.site) {
   }
   .sf__note {
     margin-left: auto;
+    padding-left: calc(14 * var(--s));
+    white-space: nowrap;
     font-size: max(12.5px, calc(7.6 * var(--t)));
   }
 }
 
 /* Wide screens: the hero photo keeps covering; content stays in the 1440 frame. */
-
 
 /* ---------- Variations tab ---------- */
 .vr {

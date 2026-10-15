@@ -60,11 +60,3 @@ export const FAQS = [
 ];
 
 export const FOOTER_NOTE = "Pitch concept. Proposed services and illustrative imagery.";
-
-/** Parts named on the gutter system drawing, in drawing order. */
-export const DRAWING_LABELS = [
-  { id: "roof", label: "Roof edge" },
-  { id: "gutter", label: "Gutter" },
-  { id: "outlet", label: "Outlet" },
-  { id: "downpipe", label: "Downpipe" },
-] as const;

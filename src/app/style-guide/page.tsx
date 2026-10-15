@@ -218,7 +218,7 @@ export default function StyleGuide() {
               <ServiceRows />
             </div>
             <div className="svc-sec__panel fsg__panel">
-              <GutterDrawing replayable />
+              <GutterDrawing />
             </div>
           </section>
 

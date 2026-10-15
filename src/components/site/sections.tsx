@@ -102,6 +102,12 @@ export function EnquireIntro() {
 export function SiteFooter() {
   return (
     <footer className="sf">
+      {/* Thin rule that rises into the orange roofline at its right end (from the Home page 2 footer). */}
+      <div className="sf__line" aria-hidden="true">
+        <svg className="sf__roof" viewBox="0 0 132 17" preserveAspectRatio="none">
+          <path d="M0 16 L48 1 L86.5 16 H132" />
+        </svg>
+      </div>
       <div className="sf__inner">
         <Link href="/" className="sf__brand" aria-label="Cape Gutters, home">
           <Wordmark tone="dark" className="sf__logo" />
