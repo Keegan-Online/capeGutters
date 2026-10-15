@@ -1,6 +1,6 @@
 # Handover
 
-**Date:** 2026-10-15. **State:** both homepages built and tested locally. Not deployed (Keegan: local only).
+**Date:** 2026-10-15. **State:** Built, Tested locally, Director signed off (8a40c3e). Waiting for Keegan's review. Not deployed (Keegan: local only).
 
 ## What exists
 
@@ -20,6 +20,13 @@
 - `npm run dev -- --port 3217`, then open http://localhost:3217
 - `node scripts/shoot.mjs <dir>` takes full-page screenshots at 1440, 390 and 765.
 - `node scripts/check.mjs` runs the behaviour checks: switching, nav, map with mouse, keyboard and touch, FAQ, form, mobile menu and reduced motion.
+
+## Review trail
+
+- Whole-journey reviewer: 3 blocking gaps plus mismatches, all fixed in 2206e1d.
+- Codex flagged dead style guide controls, fixed in e201f79, and style guide section links with no targets, fixed in 7c13308. Its latest review found no blocking issues.
+- Director: REALIGN (style guide header specimen, mobile hero captions, wide hero), all fixed in 8a40c3e, then SIGNED OFF.
+- Evidence: `screens/` (gitignored), including side-by-sides against both mockups.
 
 ## Next
 
