@@ -37,6 +37,7 @@ const SWATCHES: Record<Variant, { name: string; value: string }[]> = {
 function Theme({ variant }: { variant: Variant }) {
   const c = COPY[variant];
   const label = variant === "one" ? "Home page 1: light" : "Home page 2: warm charcoal";
+  const page = variant === "one" ? "/home-page-1" : "/home-page-2";
   return (
     <EnquiryProvider>
       <div className="cg sg-theme" data-variant={variant}>
@@ -48,8 +49,8 @@ function Theme({ variant }: { variant: Variant }) {
         </header>
 
         <section className="sg-block sg-flush">
-          <h3 className="sg-label">Header with version switch (try the links and, below 1360px, the Menu)</h3>
-          <SiteHeader variant={variant} />
+          <h3 className="sg-label">Header with version switch (section links open that homepage)</h3>
+          <SiteHeader variant={variant} linkBase={page} />
         </section>
 
         <section className="sg-block">
@@ -118,7 +119,7 @@ function Theme({ variant }: { variant: Variant }) {
 
         <section className="sg-block sg-flush">
           <h3 className="sg-label">Footer</h3>
-          <SiteFooter variant={variant} />
+          <SiteFooter variant={variant} linkBase={page} />
         </section>
 
         <section className="sg-block sg-map">

@@ -30,7 +30,7 @@ export function Steps({ steps }: { steps: { title: string; text?: string }[] }) 
   );
 }
 
-export function SiteFooter({ variant }: { variant: Variant }) {
+export function SiteFooter({ variant, linkBase = "" }: { variant: Variant; linkBase?: string }) {
   return (
     <footer className="site-footer">
       {variant === "two" && (
@@ -41,14 +41,14 @@ export function SiteFooter({ variant }: { variant: Variant }) {
         </div>
       )}
       <div className="site-footer__inner">
-        <a href="#top" className="site-footer__brand" aria-label="Cape Gutters, back to top">
+        <a href={`${linkBase}#top`} className="site-footer__brand" aria-label="Cape Gutters, back to top">
           <Logo />
         </a>
         <nav aria-label="Footer">
           <ul className="site-footer__nav">
             {NAV.map((n) => (
               <li key={n.href}>
-                <a href={n.href}>{n.label}</a>
+                <a href={`${linkBase}${n.href}`}>{n.label}</a>
               </li>
             ))}
           </ul>

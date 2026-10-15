@@ -5,7 +5,8 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Arrow, Logo } from "./icons";
 import { NAV, VERSIONS, type Variant } from "./content";
 
-export function SiteHeader({ variant }: { variant: Variant }) {
+/** `linkBase` lets a specimen (style guide) point section links at a real page. */
+export function SiteHeader({ variant, linkBase = "" }: { variant: Variant; linkBase?: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -57,7 +58,12 @@ export function SiteHeader({ variant }: { variant: Variant }) {
   return (
     <header className="site-header" data-scrolled={scrolled ? "" : undefined} data-open={open ? "" : undefined}>
       <div className="site-header__inner">
-        <a href="#top" className="site-header__brand" aria-label="Cape Gutters, back to top" onClick={close}>
+        <a
+          href={`${linkBase}#top`}
+          className="site-header__brand"
+          aria-label="Cape Gutters, back to top"
+          onClick={close}
+        >
           <Logo />
         </a>
 
@@ -65,7 +71,7 @@ export function SiteHeader({ variant }: { variant: Variant }) {
           <ul className="nav">
             {NAV.map((n) => (
               <li key={n.href}>
-                <a href={n.href} className="nav__link">
+                <a href={`${linkBase}${n.href}`} className="nav__link">
                   {n.label}
                 </a>
               </li>
@@ -74,7 +80,7 @@ export function SiteHeader({ variant }: { variant: Variant }) {
           {versions}
         </nav>
 
-        <a href="#quote" className="btn btn--header">
+        <a href={`${linkBase}#quote`} className="btn btn--header">
           <span>Request a quote</span>
           {variant === "one" && <Arrow className="btn__arrow" />}
         </a>
@@ -100,7 +106,7 @@ export function SiteHeader({ variant }: { variant: Variant }) {
         <ul className="mobile-menu__nav">
           {NAV.map((n) => (
             <li key={n.href}>
-              <a href={n.href} onClick={close}>
+              <a href={`${linkBase}${n.href}`} onClick={close}>
                 {n.label}
               </a>
             </li>
@@ -110,7 +116,7 @@ export function SiteHeader({ variant }: { variant: Variant }) {
           <p className="mobile-menu__caption">Switch version</p>
           {versions}
         </div>
-        <a href="#quote" className="btn btn--block" onClick={close}>
+        <a href={`${linkBase}#quote`} className="btn btn--block" onClick={close}>
           <span>Request a quote</span>
           <Arrow className="btn__arrow" />
         </a>
