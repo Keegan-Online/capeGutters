@@ -441,7 +441,7 @@
 .hero__media {
   position: relative;
   order: 2;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
 }
 .hero__img {
@@ -1451,7 +1451,7 @@
     display: none;
   }
 
-  @media (min-width: 1360px) {
+  @container (min-width: 1360px) {
     .site-header__nav {
       margin-left: auto;
     }
@@ -2204,8 +2204,20 @@
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 160px);
     mask-image: linear-gradient(90deg, transparent 0, #000 160px);
   }
+  /* Page 1: one wide plate (the 1440 photo plus a matched sky and treeline on the
+     left), sized so its right part is exactly the 1440 composition. */
   .cg[data-variant="one"] .hero {
-    background: linear-gradient(180deg, #bdd8f6 0%, #cde1f8 40%, #d6e2ea 72%, #aab597 100%);
+    background:
+      linear-gradient(
+        90deg,
+        rgba(246, 249, 251, 0.55) 0,
+        rgba(246, 249, 251, 0.25) calc(var(--edge) + 504px),
+        rgba(246, 249, 251, 0) calc(var(--edge) + 792px)
+      ),
+      url("/images/hero-light-xwide.webp") right 16% / max(2255.4px, 100%) auto no-repeat;
+  }
+  .cg[data-variant="one"] .hero__media {
+    display: none;
   }
   .hero__side,
   .cg[data-variant="two"] .hero__side {
@@ -2213,6 +2225,12 @@
   }
   .cg[data-variant="two"] .hero__side {
     left: calc(100% - 1440px + 1224px);
+  }
+}
+@media (min-width: 2256px) {
+  /* The page 1 plate now scales with the width, so its caption does too. */
+  .cg[data-variant="one"] .hero__side {
+    left: 92.2%;
   }
 }
 

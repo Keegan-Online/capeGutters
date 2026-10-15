@@ -155,6 +155,9 @@
   background: var(--ivory);
   color: var(--dark-ink);
 }
+.cg[data-variant="two"] .sg-steps .sg-label {
+  color: var(--dark-muted);
+}
 .cg[data-variant="one"] .sg-steps .sg-label {
   color: rgba(242, 240, 237, 0.7);
 }
