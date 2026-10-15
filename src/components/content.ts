@@ -58,7 +58,11 @@ const FAQS_TWO = [
   },
 ];
 
-const STEPS = ["Share your suburb|and a few photos", "Arrange a site|assessment", "Receive a quote for|the agreed work"];
+const STEPS = [
+  "Share your suburb|and a few photos",
+  "Arrange a site|assessment",
+  "Receive a quote for|the agreed work",
+];
 
 export const COPY: Record<Variant, Copy> = {
   one: {
@@ -114,7 +118,10 @@ export const COPY: Record<Variant, Copy> = {
       steps: [
         { title: "Share your suburb|and a few photos", text: "Give us some details about|your property." },
         { title: "Arrange a site|assessment", text: "We will plan a convenient|time to assess the work|required." },
-        { title: "Receive a quote|for the agreed work", text: "You will get a clear quote|based on your property|and needs." },
+        {
+          title: "Receive a quote|for the agreed work",
+          text: "You will get a clear quote|based on your property|and needs.",
+        },
       ],
     },
     map: {

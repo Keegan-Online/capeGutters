@@ -8,6 +8,13 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  /* Anchors and focused controls land below the sticky header. */
+  scroll-padding: 72px 0 0;
+}
+@media (min-width: 900px) {
+  html {
+    scroll-padding: calc(59 * min(100vw / 765, 1.7px) + 8px) 0 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

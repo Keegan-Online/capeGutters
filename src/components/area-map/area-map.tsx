@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { Arrow } from "../icons";
 import { Lines } from "../lines";
 import { useEnquiry } from "../enquiry/enquiry-context";
@@ -31,7 +31,7 @@ const LABELS: Record<string, Partial<Record<View, LabelTweak>>> = {
   "southern-suburbs": { wide: { at: [23.8, 48.6] }, tall: { at: [23.6, 47.8] } },
   "cape-flats": { wide: { at: [37.2, 53.6] }, tall: { at: [35.8, 54.2] } },
   "south-peninsula": { wide: { at: [21.2, 67.4], water: true }, tall: { at: [21.2, 69.5], water: true } },
-  helderberg: { wide: { at: [60.2, 55.6] }, tall: { at: [60.5, 58.6], side: "left" } },
+  helderberg: { wide: { at: [61.4, 56.2], side: "left" }, tall: { at: [60.5, 58.6], side: "left" } },
 };
 
 function useView(): View {
@@ -52,10 +52,14 @@ function useProjection(stage: React.RefObject<HTMLDivElement | null>, box: Box, 
   useLayoutEffect(() => {
     const el = stage.current;
     if (!el) return;
-    const ro = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
-      setSize({ w: width, h: height });
-    });
+    // Layout measurement: read the stage size now (ResizeObserver can be late
+    // in background tabs) and again whenever it changes.
+    const measure = () => {
+      const rect = el.getBoundingClientRect();
+      setSize({ w: rect.width, h: rect.height });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
   }, [stage]);
@@ -69,7 +73,18 @@ function useProjection(stage: React.RefObject<HTMLDivElement | null>, box: Box, 
 
 const GRID_STEP = 5;
 
-export function AreaMap({ title, lede, caption }: { title: [string, string]; lede: string; caption: string }) {
+export function AreaMap({
+  title,
+  lede,
+  caption,
+  sectionId = "areas",
+}: {
+  title: [string, string];
+  lede: string;
+  caption: string;
+  sectionId?: string;
+}) {
+  const uid = "map" + useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const view = useView();
   const box = VIEWBOX[view];
   const stageRef = useRef<HTMLDivElement>(null);
@@ -91,7 +106,7 @@ export function AreaMap({ title, lede, caption }: { title: [string, string]; led
   const toggle = (id: string) => setSelected((cur) => (cur === id ? null : id));
 
   return (
-    <section id="areas" className="areas" aria-labelledby="areas-title">
+    <section id={sectionId} className="areas" aria-labelledby={`${sectionId}-title`}>
       <div className="areas__stage" ref={stageRef} data-view={view}>
         <svg
           className="areas__svg"
@@ -101,10 +116,10 @@ export function AreaMap({ title, lede, caption }: { title: [string, string]; led
           focusable="false"
         >
           <defs>
-            <filter id="map-shadow" x="-10%" y="-10%" width="120%" height="130%">
+            <filter id={`${uid}-shadow`} x="-10%" y="-10%" width="120%" height="130%">
               <feDropShadow dx="0" dy="0.9" stdDeviation="1.1" floodColor="var(--map-shadow)" floodOpacity="1" />
             </filter>
-            <filter id="map-lift" x="-20%" y="-20%" width="140%" height="150%">
+            <filter id={`${uid}-lift`} x="-20%" y="-20%" width="140%" height="150%">
               <feDropShadow dx="0" dy="0.7" stdDeviation="0.7" floodColor="var(--map-lift-shadow)" floodOpacity="1" />
             </filter>
           </defs>
@@ -119,7 +134,7 @@ export function AreaMap({ title, lede, caption }: { title: [string, string]; led
             ))}
           </g>
 
-          <path className="map-slab" d={LAND} transform="translate(0 0.55)" filter="url(#map-shadow)" />
+          <path className="map-slab" d={LAND} transform="translate(0 0.55)" filter={`url(#${uid}-shadow)`} />
           <path className="map-outside" d={OUTSIDE_LAND} />
 
           <g className="map-regions">
@@ -145,7 +160,7 @@ export function AreaMap({ title, lede, caption }: { title: [string, string]; led
               className="map-active"
               data-state={activeRegion.id === selected ? "selected" : "hover"}
               d={activeRegion.d}
-              filter="url(#map-lift)"
+              filter={`url(#${uid}-lift)`}
               vectorEffect="non-scaling-stroke"
               onPointerLeave={() => setHovered(null)}
               onClick={() => toggle(activeRegion.id)}
@@ -199,7 +214,7 @@ export function AreaMap({ title, lede, caption }: { title: [string, string]; led
       </div>
 
       <div className="areas__copy">
-        <h2 id="areas-title" className="h-areas">
+        <h2 id={`${sectionId}-title`} className="h-areas">
           {title[0]}
           <br />
           {title[1].replace(/\.$/, "")}
@@ -213,7 +228,8 @@ export function AreaMap({ title, lede, caption }: { title: [string, string]; led
           {selectedRegion ? (
             <>
               <p className="areas__picked">
-                <span className="areas__picked-label">Selected area</span>
+                <span className="sr-only">Selected area: </span>
+                <span className="areas__picked-dot" aria-hidden="true" />
                 <span className="areas__picked-name">{selectedRegion.name}</span>
               </p>
               {area === selectedRegion.name ? (
@@ -235,7 +251,10 @@ export function AreaMap({ title, lede, caption }: { title: [string, string]; led
         </div>
 
         <p className="areas__caption">
-          {caption} <span className="areas__credit">Areas are a guide, not service boundaries. Coastline © OpenStreetMap contributors.</span>
+          {caption}{" "}
+          <span className="areas__credit">
+            Areas are a guide, not service boundaries. Coastline © OpenStreetMap contributors.
+          </span>
         </p>
       </div>
     </section>

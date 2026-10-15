@@ -106,7 +106,13 @@ export function HomePage({ variant }: { variant: Variant }) {
           <section className="assess" aria-labelledby="assess-title">
             {one && (
               <div className="assess__media" aria-hidden="true">
-                <Image src="/images/gutter-band.webp" alt="" fill sizes="(min-width: 900px) 35vw, 100vw" className="assess__img" />
+                <Image
+                  src="/images/gutter-band.webp"
+                  alt=""
+                  fill
+                  sizes="(min-width: 900px) 35vw, 100vw"
+                  className="assess__img"
+                />
               </div>
             )}
             <div className="assess__copy">

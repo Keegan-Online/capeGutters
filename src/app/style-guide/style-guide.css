@@ -1,0 +1,134 @@
+/* Style guide page only. Pieces inside use the real classes from home.css. */
+.sg {
+  background: #e9e6e1;
+  padding-bottom: 60px;
+}
+.sg-intro {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 48px 20px 28px;
+  color: #161513;
+}
+.sg-intro h1 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+.sg-intro p {
+  margin-top: 8px;
+  max-width: 60ch;
+  color: #55575d;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.sg-theme {
+  max-width: 980px;
+  margin: 0 auto 28px;
+  min-height: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.5);
+}
+.sg-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.sg-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.sg-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--orange);
+  font-weight: 600;
+}
+.sg-block {
+  padding: 26px 28px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.cg[data-variant="two"] .sg-block,
+.cg[data-variant="two"] .sg-head {
+  border-color: var(--rule);
+}
+.sg-label {
+  margin-bottom: 16px !important;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.sg-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 14px;
+}
+.sg-swatches li {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+}
+.sg-chip {
+  height: 54px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.25);
+}
+.sg-swatch-name {
+  font-weight: 600;
+}
+.sg-swatches code {
+  font-size: 12px;
+  color: var(--muted);
+}
+.sg-type {
+  display: grid;
+  gap: 14px;
+}
+.sg-type .h-hero {
+  font-size: 56px;
+}
+.sg-spaced {
+  font-size: 11px;
+}
+.sg-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+}
+.sg-flat {
+  position: static !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+}
+.sg-services .services__copy {
+  max-width: 520px;
+}
+.sg-quote {
+  display: block !important;
+  max-width: 420px;
+}
+.cg[data-variant="one"] .sg-quote {
+  background: var(--orange) !important;
+  padding: 18px !important;
+  border-radius: 4px;
+}
+.sg-map {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+.sg-map .sg-label {
+  padding: 0 28px;
+}
+.sg-map .areas {
+  --s: calc(min(100cqw, 1440px) / 765);
+}

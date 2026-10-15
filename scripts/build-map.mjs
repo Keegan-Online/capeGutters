@@ -110,7 +110,25 @@ const REGIONS = [
     id: "northern-suburbs",
     name: "Northern Suburbs",
     label: [18.655, -33.875],
-    ring: at("F", "G1", "V", "W", [18.65, -33.76], [18.72, -33.775], [18.745, -33.8], [18.785, -33.845], [18.772, -33.88], [18.79, -33.92], [18.768, -33.955], "S", "R", [18.7, -33.99], [18.62, -33.965], [18.56, -33.955], "K"),
+    ring: at(
+      "F",
+      "G1",
+      "V",
+      "W",
+      [18.65, -33.76],
+      [18.72, -33.775],
+      [18.745, -33.8],
+      [18.785, -33.845],
+      [18.772, -33.88],
+      [18.79, -33.92],
+      [18.768, -33.955],
+      "S",
+      "R",
+      [18.7, -33.99],
+      [18.62, -33.965],
+      [18.56, -33.955],
+      "K",
+    ),
   },
   {
     id: "cape-town",
@@ -134,7 +152,19 @@ const REGIONS = [
     id: "cape-flats",
     name: "Cape Flats",
     label: [18.615, -34.02],
-    ring: at("K", [18.56, -33.955], [18.62, -33.965], [18.7, -33.99], "R", [18.735, -34.3], [18.56, -34.3], "Q", "Pc", "M", "L"),
+    ring: at(
+      "K",
+      [18.56, -33.955],
+      [18.62, -33.965],
+      [18.7, -33.99],
+      "R",
+      [18.735, -34.3],
+      [18.56, -34.3],
+      "Q",
+      "Pc",
+      "M",
+      "L",
+    ),
   },
   {
     id: "south-peninsula",
@@ -146,7 +176,19 @@ const REGIONS = [
     id: "helderberg",
     name: "Helderberg",
     label: [18.85, -34.07],
-    ring: at("R", "S", [18.8, -34.03], [18.87, -34.035], [18.92, -34.075], [18.95, -34.12], [18.92, -34.16], [18.885, -34.2], [18.86, -34.235], [18.8, -34.3], [18.735, -34.3]),
+    ring: at(
+      "R",
+      "S",
+      [18.8, -34.03],
+      [18.87, -34.035],
+      [18.92, -34.075],
+      [18.95, -34.12],
+      [18.92, -34.16],
+      [18.885, -34.2],
+      [18.86, -34.235],
+      [18.8, -34.3],
+      [18.735, -34.3],
+    ),
   },
 ];
 
@@ -212,13 +254,24 @@ function toPath(multi) {
     for (const ring of poly) {
       const pts = dp(ring.map(proj), TOL);
       if (pts.length < 4) continue;
-      d += "M" + pts.slice(0, -1).map(([x, y]) => `${f(x)} ${f(y)}`).join("L") + "Z";
+      d +=
+        "M" +
+        pts
+          .slice(0, -1)
+          .map(([x, y]) => `${f(x)} ${f(y)}`)
+          .join("L") +
+        "Z";
     }
   return d;
 }
 
 const out = {
-  regions: regionGeoms.map((r) => ({ id: r.id, name: r.name, label: proj(r.label).map((n) => +n.toFixed(2)), d: toPath(r.geom) })),
+  regions: regionGeoms.map((r) => ({
+    id: r.id,
+    name: r.name,
+    label: proj(r.label).map((n) => +n.toFixed(2)),
+    d: toPath(r.geom),
+  })),
   outside: toPath(outside),
   land: toPath(land),
   places: {

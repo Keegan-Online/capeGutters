@@ -1,22 +1,11 @@
 "use client";
 
-import {
-  useActionState,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type FormEvent,
-} from "react";
+import { useActionState, useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { submitEnquiry, type EnquiryState } from "@/app/actions";
 import { Arrow } from "../icons";
 import { SERVICE_TITLES, type Variant } from "../content";
 import { useEnquiry } from "./enquiry-context";
-import {
-  validateEnquiry,
-  type EnquiryErrors,
-  type FieldName,
-} from "./validate";
+import { validateEnquiry, type EnquiryErrors, type FieldName } from "./validate";
 
 const FIELDS: {
   name: FieldName;
@@ -38,13 +27,7 @@ const EMPTY: Record<FieldName, string> = {
   message: "",
 };
 
-export function EnquiryForm({
-  variant,
-  deliveryConfigured,
-}: {
-  variant: Variant;
-  deliveryConfigured: boolean;
-}) {
+export function EnquiryForm({ variant, deliveryConfigured }: { variant: Variant; deliveryConfigured: boolean }) {
   const { service, area, setService, setArea, registerForm } = useEnquiry();
   const [values, setValues] = useState(EMPTY);
   const [clientErrors, setClientErrors] = useState<EnquiryErrors>({});
@@ -79,18 +62,14 @@ export function EnquiryForm({
       e.preventDefault();
       setShowResult(false);
       const first = FIELDS.find((f) => found[f.name]);
-      if (first)
-        (
-          formRef.current?.elements.namedItem(first.name) as HTMLElement | null
-        )?.focus();
+      if (first) (formRef.current?.elements.namedItem(first.name) as HTMLElement | null)?.focus();
     }
   }
 
   function update(name: FieldName, value: string) {
     setValues((v) => ({ ...v, [name]: value }));
     setShowResult(false);
-    if (clientErrors[name])
-      setClientErrors((errs) => ({ ...errs, [name]: undefined }));
+    if (clientErrors[name]) setClientErrors((errs) => ({ ...errs, [name]: undefined }));
   }
 
   const result = showResult && !pending ? state.status : "idle";
@@ -106,11 +85,7 @@ export function EnquiryForm({
     >
       <input type="hidden" name="service" value={service ?? ""} />
       <input type="hidden" name="area" value={area ?? ""} />
-      <input
-        type="hidden"
-        name="page"
-        value={variant === "one" ? "home-page-1" : "home-page-2"}
-      />
+      <input type="hidden" name="page" value={variant === "one" ? "home-page-1" : "home-page-2"} />
 
       <div className="enquiry__card">
         {(service || area) && (
@@ -157,25 +132,14 @@ export function EnquiryForm({
             required: true,
           } as const;
           return (
-            <div
-              key={f.name}
-              className={`field${f.multiline ? " field--multi" : ""}${err ? " field--error" : ""}`}
-            >
+            <div key={f.name} className={`field${f.multiline ? " field--multi" : ""}${err ? " field--error" : ""}`}>
               <label htmlFor={id} className="field__label">
                 {f.label}
               </label>
               {f.multiline ? (
-                <textarea
-                  {...common}
-                  rows={3}
-                  onChange={(e) => update(f.name, e.target.value)}
-                />
+                <textarea {...common} rows={3} onChange={(e) => update(f.name, e.target.value)} />
               ) : (
-                <input
-                  {...common}
-                  type="text"
-                  onChange={(e) => update(f.name, e.target.value)}
-                />
+                <input {...common} type="text" onChange={(e) => update(f.name, e.target.value)} />
               )}
               {err && (
                 <p id={`${id}-err`} className="field__error">
@@ -194,15 +158,14 @@ export function EnquiryForm({
         <div className="enquiry__status" aria-live="polite">
           {result === "demo" && (
             <p className="notice notice--demo">
-              <strong>Demo only.</strong> Your details passed the checks, but
-              this form is not connected yet, so nothing was sent. Your details
-              are still in the form.
+              <strong>Demo only.</strong> Your details passed the checks, but this form is not connected yet, so nothing
+              was sent. Your details are still in the form.
             </p>
           )}
           {result === "failed" && (
             <p className="notice notice--error">
-              <strong>Not sent.</strong> Something went wrong on our side. Your
-              details are still in the form, so please try again.
+              <strong>Not sent.</strong> Something went wrong on our side. Your details are still in the form, so please
+              try again.
             </p>
           )}
           {result === "sent" && (
@@ -216,8 +179,7 @@ export function EnquiryForm({
       <p id={`${uid}-mode`} className="enquiry__mode">
         {deliveryConfigured ? null : (
           <>
-            <span className="tag">Demo</span> This form is not connected yet.
-            Nothing you enter is sent.
+            <span className="tag">Demo</span> This form is not connected yet. Nothing you enter is sent.
           </>
         )}
       </p>
