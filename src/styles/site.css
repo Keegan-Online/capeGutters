@@ -522,7 +522,8 @@ body:has(.site) {
 .gd-svg .gd-hl path {
   fill: none;
   stroke: var(--orange);
-  stroke-width: 2.6;
+  /* User units: about 2.8px on a 390px phone (was 1.7px). */
+  stroke-width: 4.2;
   stroke-linejoin: miter;
   vector-effect: none;
   stroke-dasharray: 1 1;
@@ -533,7 +534,7 @@ body:has(.site) {
 }
 .gd[data-reveal="play"] .gd-hl path {
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset var(--t) cubic-bezier(0.65, 0, 0.35, 1) var(--d);
+  transition: stroke-dashoffset var(--t) var(--ease-in-out) var(--d);
 }
 .gd-leaders path {
   fill: none;
@@ -607,6 +608,30 @@ body:has(.site) {
 }
 .spec__photo img {
   object-fit: cover;
+}
+/* Scroll reveal (marketing, once): each photo fades up into place while the image
+   inside settles from a slight zoom. The second photo follows 80ms later. */
+.spec__photos[data-reveal] .spec__photo {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.spec__photos[data-reveal] .spec__photo img {
+  transform: scale(1.04);
+}
+.spec__photos[data-reveal="play"] .spec__photo {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+.spec__photos[data-reveal="play"] .spec__photo img {
+  transform: scale(1);
+  transition: transform 1200ms var(--ease-out);
+}
+.spec__photos[data-reveal="play"] .spec__photo--b,
+.spec__photos[data-reveal="play"] .spec__photo--b img {
+  transition-delay: 80ms;
 }
 .spec__photo--a {
   left: 0;
@@ -711,7 +736,13 @@ body:has(.site) {
   color: var(--ink-2);
 }
 .mp__result p {
-  animation: rise-s 280ms var(--ease-out);
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: translateY(4px);
+  }
 }
 .mp__result strong {
   color: var(--ink);
@@ -735,7 +766,14 @@ body:has(.site) {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  animation: rise-s 240ms var(--ease-out);
+  transform-origin: top center;
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.97);
+  }
 }
 .mp__caption {
   order: 7;
@@ -767,7 +805,7 @@ body:has(.site) {
   stroke-width: 1;
   stroke-linejoin: round;
   cursor: pointer;
-  transition: fill 240ms var(--ease-out);
+  transition: fill 150ms ease;
 }
 .mp__region[data-state="hover"] {
   fill: var(--map-hover) !important;
@@ -784,11 +822,9 @@ body:has(.site) {
   stroke-width: 1.4;
   stroke-linejoin: round;
   cursor: pointer;
-  animation: region-in 320ms var(--ease-out);
-}
-@keyframes region-in {
-  from {
-    opacity: 0.4;
+  transition: opacity 200ms var(--ease-out);
+  @starting-style {
+    opacity: 0.35;
   }
 }
 .mp__overlay {
@@ -807,11 +843,14 @@ body:has(.site) {
   color: #3b372f;
   white-space: nowrap;
   border-radius: 3px;
-  transition: color 160ms ease;
+  transition:
+    color 150ms ease,
+    opacity 150ms ease;
 }
 .mp__label[data-state="selected"] {
   opacity: 0;
 }
+
 .mp__label[data-state="hover"] {
   color: var(--ink);
 }
@@ -827,17 +866,50 @@ body:has(.site) {
 .mp__callout {
   position: absolute;
   z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transform: translate(-7px, -50%);
-  pointer-events: auto;
-  animation: callout-in 260ms var(--ease-out);
+  width: 0;
+  height: 0;
+  pointer-events: none;
 }
-@keyframes callout-in {
-  from {
+.mp__callout .mp__pin {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+}
+/* The card sits where it covers no label (set by the component). */
+.mp__callout .mp__card {
+  position: absolute;
+  pointer-events: auto;
+  left: 16px;
+  top: 0;
+  translate: 0 -50%;
+}
+.mp__callout[data-place="left"] .mp__card {
+  left: auto;
+  right: 16px;
+  transform-origin: right center;
+}
+.mp__callout[data-place="below"] .mp__card {
+  left: -18px;
+  top: 16px;
+  translate: none;
+  transform-origin: 18px top;
+}
+.mp__callout[data-place="above"] .mp__card {
+  left: -18px;
+  top: auto;
+  bottom: 16px;
+  translate: none;
+  transform-origin: 18px bottom;
+}
+/* Popover recipe: the card scales out of its pin (transform-origin at the pin). */
+.mp__callout .mp__card {
+  transform-origin: left center;
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+  @starting-style {
     opacity: 0;
-    transform: translate(-7px, -50%) translateX(-6px);
+    transform: scale(0.95);
   }
 }
 .mp__pin {
@@ -881,8 +953,10 @@ body:has(.site) {
   width: 16px;
   transition: transform 200ms var(--ease-out);
 }
-.mp__card-action:hover svg {
-  transform: translateX(3px);
+@media (hover: hover) and (pointer: fine) {
+  .mp__card-action:hover svg {
+    transform: translateX(3px);
+  }
 }
 .mp__legend {
   position: absolute;
@@ -1209,12 +1283,36 @@ body:has(.site) {
   color: var(--ivory-2);
 }
 
-/* ---------- Reduced motion ---------- */
+/* ---------- Reduced motion: fewer and gentler, not zero ---------- */
 @media (prefers-reduced-motion: reduce) {
+  /* Keyframed movement (menu drop, error nudge, chips, notices) becomes instant. */
   .site *,
   .site *::before,
   .site *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+  /* Photos keep a soft fade but no rise or zoom. */
+  .spec__photos[data-reveal] .spec__photo,
+  .spec__photos[data-reveal] .spec__photo img {
+    transform: none !important;
+  }
+  /* Map callout and results fade without scaling or rising. */
+  .mp__callout .mp__card,
+  .mp__below .mp__card,
+  .mp__result p {
+    @starting-style {
+      transform: none;
+    }
+  }
+  /* Arrow nudges, press scale and layout transitions are dropped. */
+  .btn-s,
+  .btn-s__icon,
+  .link-s svg,
+  .svc__arrow,
+  .mp__card-action svg,
+  .fq__a,
+  .fq__icon .icon-pm__v {
     transition-duration: 0.01ms !important;
   }
 }
@@ -1385,6 +1483,10 @@ body:has(.site) {
   }
   .gd-label {
     font-size: max(13px, calc(8.4 * var(--t)));
+  }
+  .gd-svg .gd-hl path {
+    /* About 3.9px at 1440 (was 2.8px). */
+    stroke-width: 3.6;
   }
 
   /* Specification */

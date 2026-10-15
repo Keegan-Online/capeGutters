@@ -259,16 +259,21 @@ export default function StyleGuide() {
                 <strong>Roofline</strong> The orange gutter line on the hero photo draws once, 1s, after the headline.
               </li>
               <li>
-                <strong>Gutter drawing</strong> The white section never moves. Once, when it enters view, the fine orange
-                highlight draws in order: down the roof to its edge, then along the gutter and down through the outlet
-                (about 3s). It then holds.
+                <strong>Gutter drawing</strong> The white section never moves. Once, when it enters view, the fine
+                orange highlight draws in order: down the roof to its edge, then along the gutter and down through the
+                outlet (about 3s). It then holds.
+              </li>
+              <li>
+                <strong>Spec photos</strong> Fade up once on entering view, the second 80ms after the first, each image
+                settling from a slight zoom.
               </li>
               <li>
                 <strong>Feedback</strong> Buttons press to 98%, arrows nudge 3px, links underline from the left. 160 to
                 220ms.
               </li>
               <li>
-                <strong>Map</strong> Region fill eases in, callout slides 6px, 260ms.
+                <strong>Map</strong> Region fill eases in, and the callout scales out of its pin (200ms) wherever it
+                covers no label. Cape Town is selected first.
               </li>
               <li>
                 <strong>FAQs and form</strong> Answers open by height, 280ms. A field with an error nudges once.

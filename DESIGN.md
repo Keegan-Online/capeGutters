@@ -64,17 +64,19 @@ Icons are drawn on a 24-unit grid with a 1.5 stroke and square ends.
 
 ## Motion
 
-Use `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` and `--ease-in-out` `cubic-bezier(0.77, 0, 0.175, 1)`.
+Motion follows the `animate` skill: a gate (should it move, and why), CSS first, and the shared tokens `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` and `--ease-in-out` `cubic-bezier(0.77, 0, 0.175, 1)`.
 
-- **Hero entrance:** once, 700ms.
-- **Hero roofline:** draws once, 1s.
-- **Gutter drawing:** the white section never moves. The orange highlight draws once on entering view, down the roof (950ms), then along the gutter and down the outlet (1950ms), and then holds.
-- **Feedback:** 160 to 220ms.
-- **Map:** selection 240 to 320ms.
-- **FAQ:** 280ms.
-- **Form errors:** a single nudge.
+| Moment | Purpose | Ingredients |
+| --- | --- | --- |
+| Hero entrance | Orientation, once | Rise 14px with opacity. 700ms `--ease-out`, staggered 70 to 220ms. |
+| Hero roofline | Explanation, once | Stroke draw, 1s `--ease-in-out`. |
+| Spec photos | Scroll reveal (marketing), once | Fade up 28px over 700 to 900ms `--ease-out`, the image settling from scale 1.04. The second photo follows 80ms later. |
+| Gutter drawing | Explanation, once on entering view | The white section never moves. The orange highlight draws in order: roof (950ms), then gutter and outlet (1950ms), with `--ease-in-out`. It then holds. |
+| Map region and callout | State and feedback, often repeated | Transitions only, with `@starting-style` on mount. Region 200ms. The card scales from 0.95 out of its pin over 200ms `--ease-out`, placed where it covers no label. |
+| Buttons and links | Feedback | Press to scale 0.98 over 160ms, arrows nudge 3px over 200ms. Hover motion is gated to fine pointers. |
+| FAQs and form | State | The answer opens by height over 280ms. An error nudges the field once. |
 
-There is no scroll-linked motion, no looping motion and no hover-only content. Reduced motion shows the finished states.
+There is no scroll-linked motion, no looping and no hover-only content. **Reduced motion** is fewer and gentler: photos keep a soft fade with no rise, the map card fades without scaling, and the gutter drawing and roofline are shown finished. Movement and arrow nudges are dropped.
 
 ## Variations
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Lines } from "../lines";
 import { IconArrow, Wordmark } from "./brand";
 import { ENQUIRE, FOOTER_NOTE, HERO, NAV, SPEC } from "./content";
+import { InView } from "./in-view";
 
 /* ---------- Hero ---------- */
 export function Hero() {
@@ -61,7 +62,7 @@ export function Spec() {
           ))}
         </ul>
       </div>
-      <div className="spec__photos">
+      <InView className="spec__photos">
         <div className="spec__photo spec__photo--a">
           <Image
             src="/images/final/gable.webp"
@@ -78,7 +79,7 @@ export function Spec() {
             sizes="(min-width: 900px) 28vw, 55vw"
           />
         </div>
-      </div>
+      </InView>
     </section>
   );
 }

@@ -103,8 +103,9 @@ export function SiteMap() {
   const view = useView();
   const box = VIEWBOX[view];
   const stageRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const proj = useProjection(stageRef, box, view === "wide" ? "xMax" : "xMid");
-  const [selected, setSelected] = useState<string | null>("southern-suburbs");
+  const [selected, setSelected] = useState<string | null>("cape-town");
   const [hovered, setHovered] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<Result>(null);
@@ -139,6 +140,47 @@ export function SiteMap() {
 
   const regionName = (id: string) => REGIONS.find((r) => r.id === id)?.name ?? "";
   const calloutAt = pinPlace ? pinPlace.at : region ? (LABELS[view][region.id] ?? region.label) : null;
+
+  // Place the callout card where it covers no region label and stays inside the
+  // map: right of the pin, left, below or above. Set on the DOM (no re-render).
+  useLayoutEffect(() => {
+    const overlay = overlayRef.current;
+    const callout = overlay?.querySelector<HTMLElement>(".mp__callout");
+    const cardEl = callout?.querySelector<HTMLElement>(".mp__card");
+    if (!overlay || !callout || !cardEl) return;
+    const box = overlay.getBoundingClientRect();
+    const pin = callout.querySelector<HTMLElement>(".mp__pin")!.getBoundingClientRect();
+    const cx = pin.left + pin.width / 2;
+    const cy = pin.top + pin.height / 2;
+    const w = cardEl.offsetWidth;
+    const h = cardEl.offsetHeight;
+    const gap = 16;
+    const options = {
+      right: { l: cx + gap, t: cy - h / 2 },
+      left: { l: cx - gap - w, t: cy - h / 2 },
+      below: { l: cx - 18, t: cy + gap },
+      above: { l: cx - 18, t: cy - gap - h },
+    } as const;
+    const labels = [
+      ...overlay.querySelectorAll<HTMLElement>(".mp__label:not([data-state='selected']), .mp__water"),
+    ].map((l) => l.getBoundingClientRect());
+    const score = ({ l, t }: { l: number; t: number }) => {
+      const r = { left: l, right: l + w, top: t, bottom: t + h };
+      const out =
+        Math.max(0, box.left + 4 - r.left) +
+        Math.max(0, r.right - (box.right - 4)) +
+        Math.max(0, box.top + 4 - r.top) +
+        Math.max(0, r.bottom - (box.bottom - 4));
+      const hits = labels.filter(
+        (b) => b.right > r.left - 4 && b.left < r.right + 4 && b.bottom > r.top - 2 && b.top < r.bottom + 2,
+      ).length;
+      return hits * 1000 + out;
+    };
+    const best = (Object.keys(options) as (keyof typeof options)[]).reduce((a, b) =>
+      score(options[b]) < score(options[a]) ? b : a,
+    );
+    callout.dataset.place = best;
+  });
 
   const card = region ? (
     <div className="mp__card" role="status" key={`${region.id}-${pinPlace?.name ?? ""}`}>
@@ -284,7 +326,7 @@ export function SiteMap() {
         </svg>
 
         {proj && (
-          <div className="mp__overlay">
+          <div className="mp__overlay" ref={overlayRef}>
             {(
               [
                 ["Table Bay", view === "tall" ? TABLE_BAY_TALL : PLACES.tableBay],
