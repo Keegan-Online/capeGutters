@@ -15,7 +15,11 @@ const nextConfig: NextConfig = {
     },
   },
   async redirects() {
-    return [{ source: "/", destination: "/home-page-1", permanent: false }];
+    // The first two homepages now live under the Variations tab.
+    return [
+      { source: "/home-page-1", destination: "/variations/home-page-1", permanent: false },
+      { source: "/home-page-2", destination: "/variations/home-page-2", permanent: false },
+    ];
   },
 };
 

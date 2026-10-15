@@ -58,14 +58,9 @@ export function SiteHeader({ variant, linkBase = "" }: { variant: Variant; linkB
   return (
     <header className="site-header" data-scrolled={scrolled ? "" : undefined} data-open={open ? "" : undefined}>
       <div className="site-header__inner">
-        <a
-          href={`${linkBase}#top`}
-          className="site-header__brand"
-          aria-label="Cape Gutters, back to top"
-          onClick={close}
-        >
+        <Link href="/" className="site-header__brand" aria-label="Cape Gutters final site" onClick={close}>
           <Logo />
-        </a>
+        </Link>
 
         <nav className="site-header__nav" aria-label="Main">
           <ul className="nav">
@@ -115,6 +110,9 @@ export function SiteHeader({ variant, linkBase = "" }: { variant: Variant; linkB
         <div className="mobile-menu__versions">
           <p className="mobile-menu__caption">Switch version</p>
           {versions}
+          <Link href="/" className="mobile-menu__final" onClick={close}>
+            Back to the final site
+          </Link>
         </div>
         <a href={`${linkBase}#quote`} className="btn btn--block" onClick={close}>
           <span>Request a quote</span>

@@ -2241,3 +2241,12 @@ body:has(.cg[data-variant="one"]) {
 body:has(.cg[data-variant="two"]) {
   background: #211e19;
 }
+
+.mobile-menu__final {
+  display: block;
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
