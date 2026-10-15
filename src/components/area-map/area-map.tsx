@@ -251,10 +251,10 @@ export function AreaMap({
         </div>
 
         <p className="areas__caption">
-          {caption}{" "}
-          <span className="areas__credit">
-            Areas are a guide, not service boundaries. Coastline © OpenStreetMap contributors.
+          <span className="areas__caption-line">
+            {caption} Areas are a guide, not service boundaries.
           </span>
+          <span className="areas__credit">Coastline © OpenStreetMap contributors.</span>
         </p>
       </div>
     </section>

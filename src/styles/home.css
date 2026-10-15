@@ -805,8 +805,11 @@
   line-height: 1.5;
   color: var(--muted);
 }
+.areas__caption-line,
 .areas__credit {
   display: block;
+}
+.areas__credit {
   opacity: 0.85;
 }
 
@@ -1841,18 +1844,10 @@
     margin: 0;
     padding: 0;
     font-size: max(12px, calc(8.6 * var(--t)));
-    max-width: calc(300 * var(--s));
-  }
-  .cg[data-variant="two"] .areas__caption {
-    left: auto;
-    right: var(--x);
-    bottom: calc(13 * var(--s));
-    text-align: right;
     max-width: none;
+    white-space: nowrap;
   }
-  .cg[data-variant="two"] .areas__credit {
-    display: inline;
-  }
+
   .map-label {
     font-size: max(12px, calc(10 * var(--t)));
   }

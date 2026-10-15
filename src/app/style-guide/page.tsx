@@ -6,6 +6,7 @@ import { EnquiryProvider } from "@/components/enquiry/enquiry-context";
 import { EnquiryForm } from "@/components/enquiry/enquiry-form";
 import { Arrow, Logo } from "@/components/icons";
 import { FaqAccordion, ServiceList } from "@/components/sections-client";
+import { AreaActionSpecimen, QuoteSpecimen } from "./specimens";
 import "./style-guide.css";
 
 export const metadata: Metadata = { title: "Cape Gutters | Style guide" };
@@ -73,14 +74,8 @@ function Theme({ variant }: { variant: Variant }) {
           <h3 className="sg-label">Logo and actions</h3>
           <div className="sg-row">
             <Logo />
-            <a href="#sg" className="btn">
-              <span>Request a quote</span>
-              <Arrow className="btn__arrow" />
-            </a>
-            <button type="button" className="link-action">
-              Use this area in my enquiry
-              <Arrow className="link-action__arrow" />
-            </button>
+            <QuoteSpecimen />
+            <AreaActionSpecimen />
           </div>
         </section>
 
