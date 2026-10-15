@@ -1,0 +1,25 @@
+# Secrets: never commit
+.env*
+!.env.example
+CLAUDE.local.md
+
+# Dependencies and builds
+node_modules/
+.next/
+out/
+dist/
+build/
+.netlify/
+.playwright-cli/
+.vercel/
+.turbo/
+coverage/
+*.log
+*.tsbuildinfo
+next-env.d.ts
+
+# Local screenshots
+screens/
+
+# macOS
+.DS_Store
