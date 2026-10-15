@@ -259,8 +259,9 @@ export default function StyleGuide() {
                 <strong>Roofline</strong> The orange gutter line on the hero photo draws once, 1s, after the headline.
               </li>
               <li>
-                <strong>Gutter drawing</strong> Draws once when it comes into view, about 3.5s: roof edge, gutter,
-                outlet, downpipe, each part named as it completes. Use Replay drawing above.
+                <strong>Gutter drawing</strong> The white section never moves. Once, when it enters view, the fine orange
+                highlight draws in order: down the roof to its edge, then along the gutter and down through the outlet
+                (about 3s). It then holds.
               </li>
               <li>
                 <strong>Feedback</strong> Buttons press to 98%, arrows nudge 3px, links underline from the left. 160 to

@@ -37,7 +37,7 @@ const LABELS: Record<View, Record<string, [number, number]>> = {
     "southern-suburbs": [24.4, 51.8],
     "cape-flats": [38.6, 55.2],
     "south-peninsula": [18.4, 74],
-    helderberg: [62.2, 53.2],
+    helderberg: [58.4, 55.6],
   },
 };
 const TABLE_BAY_TALL: [number, number] = [14.5, 35.2];
@@ -139,6 +139,21 @@ export function SiteMap() {
 
   const regionName = (id: string) => REGIONS.find((r) => r.id === id)?.name ?? "";
   const calloutAt = pinPlace ? pinPlace.at : region ? (LABELS[view][region.id] ?? region.label) : null;
+
+  const card = region ? (
+    <div className="mp__card" role="status" key={`${region.id}-${pinPlace?.name ?? ""}`}>
+      <p className="mp__card-name">{pinPlace ? pinPlace.name : region.name}</p>
+      {pinPlace && <p className="mp__card-sub">{region.name}</p>}
+      <button
+        type="button"
+        className="mp__card-action"
+        onClick={() => goToForm({ area: region.name, suburb: pinPlace?.name, focus: pinPlace ? "name" : "suburb" })}
+      >
+        Check availability
+        <IconArrow />
+      </button>
+    </div>
+  ) : null;
 
   return (
     <section id="areas" className="mp" aria-labelledby="areas-title">
@@ -314,20 +329,7 @@ export function SiteMap() {
                 return (
                   <div key={`${region.id}-${pinPlace?.name ?? ""}`} className="mp__callout" style={{ left, top }}>
                     <span className="mp__pin" aria-hidden="true" />
-                    <div className="mp__card" role="status">
-                      <p className="mp__card-name">{pinPlace ? pinPlace.name : region.name}</p>
-                      {pinPlace && <p className="mp__card-sub">{region.name}</p>}
-                      <button
-                        type="button"
-                        className="mp__card-action"
-                        onClick={() =>
-                          goToForm({ area: region.name, suburb: pinPlace?.name, focus: pinPlace ? "name" : "suburb" })
-                        }
-                      >
-                        Check availability
-                        <IconArrow />
-                      </button>
-                    </div>
+                    {view === "wide" && card}
                   </div>
                 );
               })()}
@@ -345,6 +347,7 @@ export function SiteMap() {
           </div>
         )}
       </div>
+      {view === "tall" && card && <div className="mp__below">{card}</div>}
     </section>
   );
 }

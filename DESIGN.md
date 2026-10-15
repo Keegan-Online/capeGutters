@@ -54,7 +54,7 @@ Text on the orange panel is white for the large heading and ink for body text. W
 | `SiteHeader` | Sits over the hero, solid once scrolled. The **Variations** tab is set apart by a rule. Phones get a Menu panel with a backdrop. |
 | Buttons (`.btn-s`) | Charcoal, square corners, arrow icon. |
 | `ServiceRows` | Each row opens the enquiry with its service attached as a chip. |
-| `GutterDrawing` | An oblique projection of a real 3D model: roof edge, gutter (profile at the stop end), running outlet, swan-neck offset, square downpipe, shoe and gully. Orange line-work with labelled parts. |
+| `GutterDrawing` | An authored 2D section at the eaves (`gutter-detail.ts`): roof covering over the rafter and fascia, a K-style gutter as the focus, a socketed drop outlet, two 45° elbows back to the wall, a clip, and a gully hopper. Warm-white structure in thin strokes, a fine orange highlight and labelled leaders. |
 | `SiteMap` | OSM coastline, eight simplified regions. A suburb search (OSM place names) carries the area and suburb into the form. North arrow and a true scale bar. |
 | `SiteEnquiryForm` | Persistent labels, validation that keeps values. Shows DEMO until `ENQUIRY_WEBHOOK_URL` is set. |
 | `Faqs` | Open by default. Minus when open, plus when closed. |
@@ -68,7 +68,7 @@ Use `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` and `--ease-in-out` `cubic-bez
 
 - **Hero entrance:** once, 700ms.
 - **Hero roofline:** draws once, 1s.
-- **Gutter drawing:** draws once when in view, about 3.5s, part by part.
+- **Gutter drawing:** the white section never moves. The orange highlight draws once on entering view, down the roof (950ms), then along the gutter and down the outlet (1950ms), and then holds.
 - **Feedback:** 160 to 220ms.
 - **Map:** selection 240 to 320ms.
 - **FAQ:** 280ms.

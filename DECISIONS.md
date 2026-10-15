@@ -28,3 +28,13 @@
 - 2026-10-15: Form: with no `ENQUIRY_WEBHOOK_URL` the form is labelled DEMO and a valid submit says nothing was sent. Success shows only after a real 2xx delivery.
 - 2026-10-15: The mockups' small spaced captions ("Keep your home protected" and similar) are supplied wording, so they stay. Nothing new was added.
 - 2026-10-15: Cache Components are off. Kept-alive hidden pages would duplicate the section ids, so anchor links could break between versions.
+
+## Final site (Architectural Authority)
+
+- 2026-10-15: Keegan chose the Architectural Authority mockup as the final direction. It brings in the gutter-system visual from the engineered concept. The earlier homepages stay under a Variations tab.
+- 2026-10-15: The identity is a proposal. The wordmark is two rooflines, the orange one running on as the gutter line, set in Archivo. The palette is orange, warm charcoal and warm off-white.
+- 2026-10-15: The gutter drawing is an authored 2D section, not a 3D wireframe, for the precision of a detail drawing (Keegan's feedback). The gutter profile is the focus.
+- 2026-10-15: Keegan's motion direction for the drawing: keep it simple, no water simulation, and no scroll-linked drawing. The white drawing stays still, and the orange highlight draws once on entering view, roof edge then gutter then outlet, and then holds.
+- 2026-10-15: The mockup's small decorative slogans are removed, by the brief.
+- 2026-10-15: On mobile the map's selection card sits below the map, so it never covers region labels.
+- 2026-10-15: Keegan: no Netlify deploy until he approves on localhost.

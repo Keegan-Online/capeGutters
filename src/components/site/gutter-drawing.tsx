@@ -1,11 +1,25 @@
-import type { CSSProperties } from "react";
+"use client";
+
+import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { GRID, LABELS, VIEW, ground, gutter, highlight, leaderPath, pipe, roof, structure } from "./gutter-detail";
 
 /*
   Gutter system detail, drawn like an architectural section.
-  Static for now: the corrected drawing is presented for review before any
-  motion is added. The orange highlight is shown in its completed state.
+  The white drawing never moves. When the figure enters the viewport, the fine
+  orange highlight draws once, in order: from the upper-right of the roof down
+  to the roof edge, then along the gutter and down through the outlet and
+  downpipe. It then holds. Without JS, or with reduced motion, the finished
+  drawing is shown.
 */
+
+// Reveal timing (ms). The short gap between the two strokes is the drip from
+// the roof edge into the gutter.
+const REVEAL = {
+  roof: { delay: 0, duration: 950 },
+  route: { delay: 1080, duration: 1950 },
+} as const;
+const timing = (t: { delay: number; duration: number }): CSSProperties =>
+  ({ "--d": `${t.delay}ms`, "--t": `${t.duration}ms` }) as CSSProperties;
 
 const pct = (x: number, y: number): CSSProperties => ({
   left: `${((x - VIEW.x) / VIEW.w) * 100}%`,
@@ -13,6 +27,25 @@ const pct = (x: number, y: number): CSSProperties => ({
 });
 
 export function GutterDrawing() {
+  const ref = useRef<HTMLElement>(null);
+
+  // Arm the reveal before first paint, then play it once when well in view.
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    el.dataset.reveal = "armed";
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        el.dataset.reveal = "play";
+        io.disconnect();
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const xs: number[] = [];
   for (let g = GRID * Math.ceil(VIEW.x / GRID); g < VIEW.x + VIEW.w; g += GRID) xs.push(g);
   const ys: number[] = [];
@@ -21,7 +54,7 @@ export function GutterDrawing() {
   const y1 = VIEW.y + VIEW.h;
 
   return (
-    <figure className="gd" aria-labelledby="gd-caption">
+    <figure ref={ref} className="gd" aria-labelledby="gd-caption">
       <svg className="gd-svg" viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`} aria-hidden="true" focusable="false">
         <g className="gd-grid">
           {xs.map((x) => (
@@ -59,10 +92,10 @@ export function GutterDrawing() {
           <path d={gutter.outer} />
         </g>
 
-        {/* Orange highlight (completed state) */}
+        {/* Orange highlight: drawn once on entering view, then held */}
         <g className="gd-hl">
-          <path d={highlight.roof} />
-          <path d={highlight.route} />
+          <path d={highlight.roof} pathLength={1} style={timing(REVEAL.roof)} />
+          <path d={highlight.route} pathLength={1} style={timing(REVEAL.route)} />
         </g>
 
         {/* Fittings sit over the pipe line, so nothing passes through them. */}

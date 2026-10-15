@@ -517,11 +517,23 @@ body:has(.site) {
 .gd-fittings .gd-cover {
   stroke: none;
 }
-/* Fine orange highlight */
-.gd-hl path {
+/* Fine orange highlight. Stroke in user units (no non-scaling) so the dash
+   reveal follows pathLength exactly in every browser. */
+.gd-svg .gd-hl path {
   fill: none;
   stroke: var(--orange);
-  stroke-width: 1.6;
+  stroke-width: 1.7;
+  stroke-linejoin: miter;
+  vector-effect: none;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+}
+.gd[data-reveal] .gd-hl path {
+  stroke-dashoffset: 1;
+}
+.gd[data-reveal="play"] .gd-hl path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--t) cubic-bezier(0.65, 0, 0.35, 1) var(--d);
 }
 .gd-leaders path {
   fill: none;
@@ -711,8 +723,22 @@ body:has(.site) {
   width: 100%;
   aspect-ratio: 76 / 70;
 }
-.mp__caption {
+.mp__below {
   order: 6;
+  position: relative;
+  z-index: 2;
+  margin: 12px var(--gutter) 0;
+}
+.mp__below .mp__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  animation: rise-s 240ms var(--ease-out);
+}
+.mp__caption {
+  order: 7;
   margin-top: 12px;
   padding-bottom: 44px;
   font-size: 13px;
